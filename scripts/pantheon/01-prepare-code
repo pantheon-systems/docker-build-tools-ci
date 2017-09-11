@@ -8,7 +8,7 @@
 # - Any needed code updates are done
 # - The build step is run to prepare the code files for the site-under-test
 #
-echo "Begin build for $CIRCLE_ENV${PR_ENV:+ for }$PR_ENV. Pantheon test environment is $TERMINUS_SITE.$TERMINUS_ENV"
+echo "Begin build for $DEFAULT_ENV. Pantheon test environment is $TERMINUS_SITE.$TERMINUS_ENV"
 
 # Configure the GitHub Oauth token if it is available
 if [ -n "$GITHUB_TOKEN" ] ; then
