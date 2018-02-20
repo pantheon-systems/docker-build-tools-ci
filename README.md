@@ -1,8 +1,8 @@
 # Docker PHP CI
 
-[![docker pull quay.io/pantheon-public/build-tools-ci](https://img.shields.io/badge/image-quay-blue.svg)](https://quay.io/repository/pantheon-public/build-tools-ci)
+[![docker pull quay.io/joel_travieso/ic-circleci-docker](https://img.shields.io/badge/image-quay-blue.svg)](https://quay.io/repository/joel_travieso/ic-circleci-docker)
 
-This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://quay.io/repository/pantheon-public/build-tools-ci) docker image.
+This is the source Dockerfile for the [joel_travieso/ic-circleci-docker](https://quay.io/repository/joel_travieso/ic-circleci-docker) docker image, based on [pantheon-public/build-tools-ci](https://quay.io/repository/pantheon-public/build-tools-ci).
 
 ## Image Contents
 
@@ -17,3 +17,7 @@ This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://q
   - [Terminus Drupal Console Plugin](https://github.com/pantheon-systems/terminus-drupal-console-plugin)
   - [Terminus Mass Update Plugin](https://github.com/pantheon-systems/terminus-mass-update)
 - Test scripts
+- [Nodejs](http://nodejs.org/dist/v6.1.0/node-v6.1.0-linux-x64.tar.gz)
+- NPM (latest)
+- Gulp
+- ESLint
