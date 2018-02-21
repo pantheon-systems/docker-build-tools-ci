@@ -1,6 +1,6 @@
 # www-ithaca Dockerfile for CircleCI
 
-[![docker pull quay.io/ithacacollege/www-ithaca-ci](https://img.shields.io/badge/image-quay-blue.svg)](https://quay.io/repository/ithacacollege/www-ithaca-ci)
+[![Docker Repository on Quay](https://quay.io/repository/ithacacollege/www-ithaca-ci/status "Docker Repository on Quay")](https://quay.io/repository/ithacacollege/www-ithaca-ci)
 
 This is the source Dockerfile for the [ithacacollege/www-ithaca-ci](https://quay.io/repository/ithacacollege/www-ithaca-ci) docker image, based on [pantheon-public/build-tools-ci](https://quay.io/repository/pantheon-public/build-tools-ci).
 
