@@ -10,7 +10,7 @@ ADD . /build-tools-ci
 # Collect the components we need for this image
 RUN apt-get update
 RUN composer -n global require -n "hirak/prestissimo:^0.3"
-RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share require pantheon-systems/terminus "^1"
+RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share require pantheon-systems/terminus "^1.7.1"
 RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share require drush/drush "^8"
 
 env TERMINUS_PLUGINS_DIR /usr/local/share/terminus-plugins
