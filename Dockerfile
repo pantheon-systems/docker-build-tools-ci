@@ -1,5 +1,6 @@
-# Use an official Python runtime as a parent image
-FROM drupaldocker/php:7.1-cli
+# Use an CircleCI-maintained PHP + node runtime as a parent image
+# Was: drupaldocker/php:7.1-cli
+FROM circleci/php:7.1-cli-node-browsers
 
 # Set the working directory to /build-tools-ci
 WORKDIR /build-tools-ci
