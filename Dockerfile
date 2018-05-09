@@ -2,6 +2,9 @@
 # Was: drupaldocker/php:7.1-cli
 FROM circleci/php:7.1-cli-node-browsers
 
+# Lazy: go back to using 'root' user as drupaldocker/php:7.1-cli does.
+USER root
+
 # Set the working directory to /build-tools-ci
 WORKDIR /build-tools-ci
 
