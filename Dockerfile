@@ -11,8 +11,16 @@ WORKDIR /build-tools-ci
 # Copy the current directory contents into the container at /build-tools-ci
 ADD . /build-tools-ci
 
+# Install php extensions et. al. needed to run Drupal, just in case.
+# c.f. https://github.com/drupal-docker/php
+RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libpq-dev libxml2-dev sudo git mysql-client openssh-client rsync \
+  && docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
+  && docker-php-ext-install gd mbstring pdo_mysql pdo_pgsql zip \
+  && docker-php-ext-install opcache bcmath soap \
+  && pecl install redis-3.1.1 \
+  && docker-php-ext-enable redis
+
 # Collect the components we need for this image
-RUN apt-get update
 RUN composer -n global require -n "hirak/prestissimo:^0.3"
 RUN mkdir -p /usr/local/share/terminus
 RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/terminus require pantheon-systems/terminus "^1.7.1"
