@@ -29,19 +29,15 @@ RUN composer -n create-project -d /usr/local/share/terminus-plugins pantheon-sys
 RUN composer -n create-project -d /usr/local/share/terminus-plugins pantheon-systems/terminus-site-clone-plugin:^1
 
 # Node
-RUN mkdir -p /tmp/node
-WORKDIR /tmp/node
-ENV NODE_VERSION 6.1.0
-ENV NPM_VERSION latest
-RUN curl -SLO "http://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
-  && tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /usr/local --strip-components=1 \
-  && rm "node-v$NODE_VERSION-linux-x64.tar.gz" \
-  && npm install -g npm@"$NPM_VERSION" \
-  && npm cache clear --force \
-  && rm -rf /tmp/*
-RUN sudo npm install -g gulp
-RUN sudo npm install -g eslint
-RUN sudo npm install -g --save eslint-config-airbnb
-RUN sudo npm install -g --save eslint-plugin-jsx-a11y
-RUN sudo npm install -g --save eslint-plugin-react
-RUN sudo npm install -g --save eslint-plugin-import
+# Recommended LTS Debian install per
+# https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+    && apt-get install -y nodejs
+
+RUN npm install -g yarn
+RUN npm install -g gulp@^4
+RUN npm install -g eslint@^4 \
+    && npm install -g --save eslint-config-airbnb \
+    && npm install -g --save eslint-plugin-jsx-a11y \
+    && npm install -g --save eslint-plugin-react \
+    && npm install -g --save eslint-plugin-import
