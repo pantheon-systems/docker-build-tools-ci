@@ -6,7 +6,7 @@ This is the source Dockerfile for the [ithacacollege/www-ithaca-ci](https://quay
 
 ## Image Contents
 
-- [Drupal PHP 7.1 Docker base image](https://github.com/drupal-docker/php/tree/master/7.1)
+- [Drupal PHP 7.0 Docker base image](https://github.com/drupal-docker/php)
 - [Terminus](https://github.com/pantheon-systems/terminus)
 - Terminus plugins
   - [Terminus Build Tools Plugin](https://github.com/pantheon-systems/terminus-build-tools-plugin)
