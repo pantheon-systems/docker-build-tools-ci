@@ -16,4 +16,14 @@ This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://q
   - [Terminus Composer Plugin](https://github.com/pantheon-systems/terminus-composer-plugin)
   - [Terminus Drupal Console Plugin](https://github.com/pantheon-systems/terminus-drupal-console-plugin)
   - [Terminus Mass Update Plugin](https://github.com/pantheon-systems/terminus-mass-update)
+- Test tools
+  - phpunit
+  - bats
+  - behat
+  - php_codesniffer
 - Test scripts
+
+## Branches
+
+- 1.x: A collection of Terminus plugins
+- 2.x: Add more components. Run as an unpriviledged user.
