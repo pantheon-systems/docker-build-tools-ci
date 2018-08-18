@@ -17,7 +17,7 @@ RUN composer -n global require -n "hirak/prestissimo:^0.3"
 RUN groupadd -g 999 tester && \
     useradd -r -m -u 999 -g tester tester && \
     chown -R tester /usr/local && \
-    chown -R tester /terminus-plugin-test
+    chown -R tester /build-tools-ci
 USER tester
 
 RUN mkdir -p /usr/local/share/terminus
