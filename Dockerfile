@@ -38,7 +38,7 @@ RUN composer -n create-project -d /usr/local/share/terminus-plugins pantheon-sys
 RUN composer -n create-project -d /usr/local/share/terminus-plugins pantheon-systems/terminus-drupal-console-plugin:^1
 RUN composer -n create-project -d /usr/local/share/terminus-plugins pantheon-systems/terminus-mass-update:^1
 RUN composer -n create-project -d /usr/local/share/terminus-plugins pantheon-systems/terminus-site-clone-plugin:^1
-RUN composer -n create-project -d /usr/local/share/terminus-plugins pantheon-systems/terminus-aliases-plugin:^1
+RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-aliases-plugin:^1
 
 # Add phpcs for use in checking code style
 RUN mkdir ~/phpcs && cd ~/phpcs && COMPOSER_BIN_DIR=/usr/local/bin composer require squizlabs/php_codesniffer:^2.7
