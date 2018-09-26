@@ -27,3 +27,4 @@ This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://q
 
 - 1.x: A collection of Terminus plugins
 - 2.x: Add more components. Run as an unpriviledged user.
+- 3.x: Start using terminus-build-tools-plugin:^2
