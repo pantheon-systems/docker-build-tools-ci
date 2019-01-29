@@ -1,6 +1,36 @@
 # Use an official Python runtime as a parent image
 FROM drupaldocker/php:7.2-cli
 
+###########################
+# Install headless Chrome
+# Borrowed from https://github.com/GoogleChrome/puppeteer/docs/troubleshooting.md#running-puppeteer-in-docker
+###########################
+
+# See https://crbug.com/795759
+RUN apt-get update && apt-get install -yq gnupg2 libgconf-2-4
+
+# Install latest chrome dev package and fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)
+# Note: this installs the necessary libs to make the bundled version of Chromium that Puppeteer
+# installs, work.
+RUN apt-get update && apt-get install -y wget --no-install-recommends \
+    && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
+    && apt-get update \
+    && apt-get install -y google-chrome-unstable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst ttf-freefont \
+      --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get purge --auto-remove -y curl \
+    && rm -rf /src/*.deb
+
+# It's a good idea to use dumb-init to help prevent zombie chrome processes.
+ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 /usr/local/bin/dumb-init
+RUN chmod +x /usr/local/bin/dumb-init
+
+
+###########################
+# Install build tools things
+###########################
+
 # Set the working directory to /build-tools-ci
 WORKDIR /build-tools-ci
 
@@ -12,13 +42,6 @@ RUN apt-get update
 RUN apt-get install -y ruby jq
 RUN gem install circle-cli
 RUN composer -n global require -n "hirak/prestissimo:^0.3"
-
-# Create an unpriviliged testuser
-RUN groupadd -g 999 tester && \
-    useradd -r -m -u 999 -g tester tester && \
-    chown -R tester /usr/local && \
-    chown -R tester /build-tools-ci
-USER tester
 
 RUN mkdir -p /usr/local/share/terminus
 RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/terminus require pantheon-systems/terminus:"^1.9"
@@ -59,3 +82,17 @@ RUN mkdir ~/behat && \
         "behat/mink-extension:^2.2" \
         "behat/mink-goutte-driver:^1.2" \
         "drupal/drupal-extension:*"
+
+###########################
+# Finalize headless Chrome
+# Borrowed from https://github.com/GoogleChrome/puppeteer/docs/troubleshooting.md#running-puppeteer-in-docker
+###########################
+
+# Create an unpriviliged testuser
+RUN groupadd -g 999 tester && \
+    useradd -r -m -u 999 -g tester tester && \
+    chown -R tester /usr/local && \
+    chown -R tester /build-tools-ci
+USER tester
+
+ENTRYPOINT ["dumb-init", "--"]
