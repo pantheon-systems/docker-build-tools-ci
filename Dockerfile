@@ -43,6 +43,13 @@ RUN apt-get install -y ruby jq
 RUN gem install circle-cli
 RUN composer -n global require -n "hirak/prestissimo:^0.3"
 
+# Create an unpriviliged testuser
+RUN groupadd -g 999 tester && \
+    useradd -r -m -u 999 -g tester tester && \
+    chown -R tester /usr/local && \
+    chown -R tester /build-tools-ci
+USER tester
+
 RUN mkdir -p /usr/local/share/terminus
 RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/terminus require pantheon-systems/terminus:"^1.9"
 RUN mkdir -p /usr/local/share/drush
@@ -82,17 +89,5 @@ RUN mkdir ~/behat && \
         "behat/mink-extension:^2.2" \
         "behat/mink-goutte-driver:^1.2" \
         "drupal/drupal-extension:*"
-
-###########################
-# Finalize headless Chrome
-# Borrowed from https://github.com/GoogleChrome/puppeteer/docs/troubleshooting.md#running-puppeteer-in-docker
-###########################
-
-# Create an unpriviliged testuser
-RUN groupadd -g 999 tester && \
-    useradd -r -m -u 999 -g tester tester && \
-    chown -R tester /usr/local && \
-    chown -R tester /build-tools-ci
-USER tester
 
 ENTRYPOINT ["dumb-init", "--"]
