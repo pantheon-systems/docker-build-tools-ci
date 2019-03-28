@@ -71,6 +71,10 @@ fi
 ) >> $BASH_ENV
 source $BASH_ENV
 
+echo 'Contents of BASH_ENV:'
+cat $BASH_ENV
+echo
+
 # Re-install the Terminus Build Tools plugin if requested
 if [ -n $BUILD_TOOLS_VERSION ] && [ "$BUILD_TOOLS_VERSION" <> 'dev-master' ]; then
   echo "Install Terminus Build Tools Plugin version $BUILD_TOOLS_VERSION"
