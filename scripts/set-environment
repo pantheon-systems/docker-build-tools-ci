@@ -41,6 +41,9 @@ if [[ -n ${PR_NUMBER} ]] ; then
   DEFAULT_ENV="pr-${PR_NUMBER}"
 fi
 
+CI_BUILD_URL=${CI_BUILD_URL:-$CIRCLE_BUILD_URL}
+CI_NODE_INDEX=${CI_NODE_INDEX:-$CIRCLE_NODE_INDEX}
+
 #=====================================================================================================================
 # EXPORT needed environment variables
 #
@@ -70,7 +73,7 @@ fi
   echo 'export LIVE_SITE_URL="https://live-$TERMINUS_SITE.pantheonsite.io/"'
   echo "export ARTIFACTS_DIR='artifacts'" >> $BASH_ENV
   echo "export ARTIFACTS_FULL_DIR='/tmp/artifacts'" >> $BASH_ENV
-  echo "export ARTIFACTS_DIR_URL='${CIRCLE_BUILD_URL}/artifacts/${CIRCLE_NODE_INDEX}/artifacts'" >> $BASH_ENV
+  echo "export ARTIFACTS_DIR_URL='${CI_BUILD_URL}/artifacts/${CI_NODE_INDEX}/artifacts'" >> $BASH_ENV
 ) >> $BASH_ENV
 source $BASH_ENV
 
