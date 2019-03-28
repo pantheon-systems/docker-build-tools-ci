@@ -18,10 +18,12 @@ This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://q
   - [Terminus Mass Update Plugin](https://github.com/pantheon-systems/terminus-mass-update)
   - [Terminus Aliases Plugin](https://github.com/pantheon-systems/terminus-aliases-plugin)
 - Test tools
+  - headless chrome
   - phpunit
   - bats
   - behat
   - php_codesniffer
+  - hub
 - Test scripts
 
 ## Branches
