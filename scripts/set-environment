@@ -12,12 +12,17 @@ set -eo pipefail
 # be set instead. CI_PULL_REQUEST is the URL of the current pull
 # request. It is assumed that this URL ends with "/PR_NUMBER".
 #
-
-
-# If variables were not passed in from the caller, then
-# fill in values from CircleCI environment variables, if set.
+# Also optional: set DEFAULT_SITE to the name of the repository.
+# If this is done, then TERMINUS_SITE will default to the name of
+# the repository if it is not set as an environment variable.
+#
+# Note that any environment variable given above is not set, then
+# it will be assigned its value from the corresponding CircleCI
+# environment variable.
+#
 CI_BRANCH=${CI_BRANCH:-$CIRCLE_BRANCH}
 CI_BUILD_NUMBER=${CI_BUILD_NUMBER:-$CIRCLE_BUILD_NUM}
+
 # Circle sets both $CIRCLE_PULL_REQUEST and $CI_PULL_REQUEST.
 PR_NUMBER=${PR_NUMBER:-$CI_PULL_REQUEST}
 PR_NUMBER=${PR_NUMBER##*/}
@@ -28,20 +33,8 @@ BASH_ENV=${BASH_ENV:-$HOME/.bashrc}
 # Provide a default email address
 GIT_EMAIL=${GIT_EMAIL:-ci-bot@pantheon.io}
 
-# Avoid ssh prompting when connecting to new ssh hosts
-mkdir -p $HOME/.ssh && echo "StrictHostKeyChecking no" >> "$HOME/.ssh/config"
-
-# Configure the GitHub Oauth token if it is available
-if [ -n "$GITHUB_TOKEN" ] ; then
-  composer -n config --global github-oauth.github.com $GITHUB_TOKEN
-fi
-
-# Set up our default git config settings.
-git config --global user.email "$GIT_EMAIL"
-git config --global user.name "CI Bot"
-git config --global core.fileMode false
-
-# Set up environment variables
+# We will also set the default site name to be the same as the repository name.
+DEFAULT_SITE=${DEFAULT_SITE:-$CIRCLE_PROJECT_REPONAME}
 
 # By default, we will make the environment name after the circle build number.
 DEFAULT_ENV=ci-$CI_BUILD_NUMBER
@@ -65,8 +58,10 @@ fi
   echo "export PR_NUMBER=$PR_NUMBER"
   echo "export CI_BRANCH=$CI_BRANCH"
   echo "export CI_BUILD_NUMBER=$CI_BUILD_NUMBER"
+  echo "export DEFAULT_SITE='$DEFAULT_SITE'"
   echo "export DEFAULT_ENV='$DEFAULT_ENV'"
   echo 'export TERMINUS_HIDE_UPDATE_MESSAGE=1'
+  echo 'export TERMINUS_SITE=${TERMINUS_SITE:-$DEFAULT_SITE}'
   echo 'export TERMINUS_ENV=${TERMINUS_ENV:-$DEFAULT_ENV}'
 ) >> $BASH_ENV
 source $BASH_ENV
@@ -74,6 +69,19 @@ source $BASH_ENV
 echo 'Contents of BASH_ENV:'
 cat $BASH_ENV
 echo
+
+# Avoid ssh prompting when connecting to new ssh hosts
+mkdir -p $HOME/.ssh && echo "StrictHostKeyChecking no" >> "$HOME/.ssh/config"
+
+# Configure the GitHub Oauth token if it is available
+if [ -n "$GITHUB_TOKEN" ] ; then
+  composer -n config --global github-oauth.github.com $GITHUB_TOKEN
+fi
+
+# Set up our default git config settings.
+git config --global user.email "$GIT_EMAIL"
+git config --global user.name "CI Bot"
+git config --global core.fileMode false
 
 # Re-install the Terminus Build Tools plugin if requested
 if [ -n $BUILD_TOOLS_VERSION ] && [ "$BUILD_TOOLS_VERSION" <> 'dev-master' ]; then
