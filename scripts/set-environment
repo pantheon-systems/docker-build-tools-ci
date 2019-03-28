@@ -43,6 +43,9 @@ fi
 
 CI_BUILD_URL=${CI_BUILD_URL:-$CIRCLE_BUILD_URL}
 CI_NODE_INDEX=${CI_NODE_INDEX:-$CIRCLE_NODE_INDEX}
+CI_PR_URL=${CI_PR_URL:-$CIRCLE_PULL_REQUEST}
+CI_PROJECT_USERNAME=${CI_PROJECT_USERNAME:-$CIRCLE_PROJECT_USERNAME}
+CI_PROJECT_REPONAME=${CI_PROJECT_REPONAME:-$CIRCLE_PROJECT_REPONAME}
 
 #=====================================================================================================================
 # EXPORT needed environment variables
@@ -61,6 +64,11 @@ CI_NODE_INDEX=${CI_NODE_INDEX:-$CIRCLE_NODE_INDEX}
   echo "export CI_BRANCH=$(echo $CI_BRANCH | grep -v '"'^\(master\|[0-9]\+.x\)$'"')"
   echo "export CI_BUILD_NUMBER=$CI_BUILD_NUMBER"
   echo "export DEFAULT_SITE='$DEFAULT_SITE'"
+  echo "export CI_NODE_INDEX='$CI_NODE_INDEX'"
+  echo "export CI_BUILD_URL='$CI_BUILD_URL'"
+  echo "export CI_PR_URL='$CI_PR_URL'"
+  echo "export CI_PROJECT_USERNAME='$CI_PROJECT_USERNAME'"
+  echo "export CI_PROJECT_REPONAME='$CI_PROJECT_REPONAME'"
   echo "export DEFAULT_ENV='$DEFAULT_ENV'"
   echo 'export TERMINUS_HIDE_UPDATE_MESSAGE=1'
   echo 'export TERMINUS_SITE=${TERMINUS_SITE:-$DEFAULT_SITE}'
