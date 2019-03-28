@@ -52,6 +52,10 @@ USER tester
 
 RUN mkdir -p /usr/local/share/terminus
 RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/terminus require pantheon-systems/terminus:"^2"
+
+RUN mkdir -p /usr/local/share/clu
+RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/clu require danielbachhuber/composer-lock-updater
+
 RUN mkdir -p /usr/local/share/drush
 RUN /usr/bin/env composer -n --working-dir=/usr/local/share/drush require drush/drush "^8"
 RUN ln -fs /usr/local/share/drush/vendor/drush/drush/drush /usr/local/bin/drush
