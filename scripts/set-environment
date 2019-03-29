@@ -48,7 +48,6 @@ CI_PROJECT_USERNAME=${CI_PROJECT_USERNAME:-$CIRCLE_PROJECT_USERNAME}
 CI_PROJECT_REPONAME=${CI_PROJECT_REPONAME:-$CIRCLE_PROJECT_REPONAME}
 TERMINUS_SITE=${TERMINUS_SITE:-$DEFAULT_SITE}
 TERMINUS_ENV=${TERMINUS_ENV:-$DEFAULT_ENV}
-BASH_ENV_FILE_NAME=$(basename -- "$BASH_ENV")
 
 #=====================================================================================================================
 # EXPORT needed environment variables
@@ -64,7 +63,6 @@ BASH_ENV_FILE_NAME=$(basename -- "$BASH_ENV")
 (
   echo 'export PATH=$PATH:$HOME/bin'
   echo "export PR_NUMBER=$PR_NUMBER"
-  echo "export BASH_ENV_FILE_NAME=$BASH_ENV_FILE_NAME"
   echo "export CI_BRANCH=$(echo $CI_BRANCH | grep -v '"'^\(master\|[0-9]\+.x\)$'"')"
   echo "export CI_BUILD_NUMBER=$CI_BUILD_NUMBER"
   echo "export DEFAULT_SITE='$DEFAULT_SITE'"
