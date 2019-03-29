@@ -19,6 +19,7 @@ set -eo pipefail
 #
 CI_BRANCH=${CI_BRANCH:-$CIRCLE_BRANCH}
 CI_BUILD_NUMBER=${CI_BUILD_NUMBER:-$CIRCLE_BUILD_NUM}
+CI_PROJECT_NAME=${$CI_PROJECT_NAME:-CIRCLE_PROJECT_REPONAME}
 
 # Circle sets both $CIRCLE_PULL_REQUEST and $CI_PULL_REQUEST.
 PR_NUMBER=${PR_NUMBER:-$CI_PULL_REQUEST}
@@ -31,7 +32,7 @@ BASH_ENV=${BASH_ENV:-$HOME/.bashrc}
 GIT_EMAIL=${GIT_EMAIL:-ci-bot@pantheon.io}
 
 # We will also set the default site name to be the same as the repository name.
-DEFAULT_SITE=${DEFAULT_SITE:-$CIRCLE_PROJECT_REPONAME}
+DEFAULT_SITE=${DEFAULT_SITE:-$CI_PROJECT_NAME}
 
 # By default, we will make the environment name after the circle build number.
 DEFAULT_ENV=ci-$CI_BUILD_NUMBER
