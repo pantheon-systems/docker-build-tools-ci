@@ -94,25 +94,18 @@ echo
 # Avoid ssh prompting when connecting to new ssh hosts
 mkdir -p $HOME/.ssh && echo "StrictHostKeyChecking no" >> "$HOME/.ssh/config"
 
-# Create the artifacts directory if needed
-if [ ! -d "$ARTIFACTS_FULL_DIR" ]; then
-  mkdir -p $ARTIFACTS_FULL_DIR
-fi
-
 # Configure the GitHub Oauth token if it is available
-if [ -n "$GITHUB_TOKEN" ] && [ -x "$(command -v composer)" ]; then
+if [ -n "$GITHUB_TOKEN" ]; then
   composer -n config --global github-oauth.github.com $GITHUB_TOKEN
 fi
 
 # Set up our default git config settings if git is available.
-if [ -x "$(command -v git)" ]; then
-  git config --global user.email "${GIT_EMAIL:-no-reply+ci-$CI_BUILD_NUMBER@getpantheon.com}"
-  git config --global user.name "CI Bot"
-  git config --global core.fileMode false
-fi
+git config --global user.email "${GIT_EMAIL:-no-reply+ci-$CI_BUILD_NUMBER@getpantheon.com}"
+git config --global user.name "CI Bot"
+git config --global core.fileMode false
 
-# Re-install the Terminus Build Tools plugin if requested and Composer is available
-if [ -x "$(command -v composer)" ] && [ -n $BUILD_TOOLS_VERSION ] && [ "$BUILD_TOOLS_VERSION" <> 'dev-master' ]; then
+# Re-install the Terminus Build Tools plugin if requested
+if [ -n $BUILD_TOOLS_VERSION ] && [ "$BUILD_TOOLS_VERSION" <> 'dev-master' ]; then
   echo "Install Terminus Build Tools Plugin version $BUILD_TOOLS_VERSION"
   rm -rf ${TERMINUS_PLUGINS_DIR:-~/.terminus/plugins}/terminus-build-tools-plugin
   composer -n create-project -d ${TERMINUS_PLUGINS_DIR:-~/.terminus/plugins} pantheon-systems/terminus-build-tools-plugin:$BUILD_TOOLS_VERSION
