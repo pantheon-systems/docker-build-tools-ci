@@ -84,7 +84,6 @@ TERMINUS_ENV=${TERMINUS_ENV:-$DEFAULT_ENV}
   echo "export LIVE_SITE_URL='https://live-$TERMINUS_SITE.pantheonsite.io/'"
   echo "export ARTIFACTS_DIR='artifacts'" >> $BASH_ENV
   echo "export ARTIFACTS_FULL_DIR='/tmp/artifacts'" >> $BASH_ENV
-  echo "export ARTIFACTS_DIR_URL='${CI_BUILD_URL}/artifacts/${CI_NODE_INDEX}/artifacts'" >> $BASH_ENV
 ) >> $BASH_ENV
 source $BASH_ENV
 
