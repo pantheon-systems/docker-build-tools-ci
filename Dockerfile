@@ -64,7 +64,7 @@ RUN chmod +x /usr/local/bin/drush
 # Add a collection of useful Terminus plugins
 env TERMINUS_PLUGINS_DIR /usr/local/share/terminus-plugins
 RUN mkdir -p /usr/local/share/terminus-plugins
-RUN composer -n create-project -d /usr/local/share/terminus-plugins pantheon-systems/terminus-build-tools-plugin:^2.0.0-beta9
+RUN composer -n create-project -d /usr/local/share/terminus-plugins pantheon-systems/terminus-build-tools-plugin:^2.0.0-beta12
 RUN composer -n create-project -d /usr/local/share/terminus-plugins pantheon-systems/terminus-secrets-plugin:^1.3
 RUN composer -n create-project -d /usr/local/share/terminus-plugins pantheon-systems/terminus-rsync-plugin:^1.1
 RUN composer -n create-project -d /usr/local/share/terminus-plugins pantheon-systems/terminus-quicksilver-plugin:^1.3
@@ -92,7 +92,7 @@ RUN mkdir ~/behat && \
     cd ~/behat && \
     COMPOSER_BIN_DIR=/usr/local/bin \
     composer require \
-        "behat/behat:^3.1" \
+        "behat/behat:^3.5" \
         "behat/mink:*" \
         "behat/mink-extension:^2.2" \
         "behat/mink-goutte-driver:^1.2" \
