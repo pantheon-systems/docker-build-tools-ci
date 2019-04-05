@@ -61,6 +61,7 @@ TERMINUS_ENV=${TERMINUS_ENV:-$DEFAULT_ENV}
 #=====================================================================================================================
 (
   echo 'export PATH=$PATH:$HOME/bin'
+  echo "export PATH='$HOME/.composer/vendor/bin:$PATH'"
   echo "export PR_NUMBER=$PR_NUMBER"
   echo "export CI_BRANCH=$(echo $CI_BRANCH | grep -v '"'^\(master\|[0-9]\+.x\)$'"')"
   echo "export CI_BUILD_NUMBER=$CI_BUILD_NUMBER"
@@ -78,8 +79,8 @@ TERMINUS_ENV=${TERMINUS_ENV:-$DEFAULT_ENV}
   echo 'export BEHAT_ADMIN_EMAIL=no-reply+ci-$CI_BUILD_NUMBER@getpantheon.com'
   echo "export MULTIDEV_SITE_URL='https://$TERMINUS_ENV-$TERMINUS_SITE.pantheonsite.io/'"
   echo "export LIVE_SITE_URL='https://live-$TERMINUS_SITE.pantheonsite.io/'"
-  echo "export ARTIFACTS_DIR='artifacts'" >> $BASH_ENV
-  echo "export ARTIFACTS_FULL_DIR='/tmp/artifacts'" >> $BASH_ENV
+  echo "export ARTIFACTS_DIR='artifacts'"
+  echo "export ARTIFACTS_FULL_DIR='/tmp/artifacts'"
 ) >> $BASH_ENV
 source $BASH_ENV
 
