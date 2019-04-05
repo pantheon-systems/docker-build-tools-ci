@@ -42,6 +42,7 @@ RUN apt-get update
 RUN apt-get install -y ruby jq curl
 RUN gem install circle-cli
 RUN composer -n global require -n "hirak/prestissimo:^0.3"
+RUN composer -n global require danielbachhuber/composer-lock-updater
 
 # Create an unpriviliged testuser
 RUN groupadd -g 999 tester && \
