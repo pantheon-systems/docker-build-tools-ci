@@ -61,7 +61,6 @@ TERMINUS_ENV=${TERMINUS_ENV:-$DEFAULT_ENV}
 #=====================================================================================================================
 (
   echo 'export PATH=$PATH:$HOME/bin'
-  echo "export PATH='$HOME/.composer/vendor/bin:$PATH'"
   echo "export PR_NUMBER=$PR_NUMBER"
   echo "export CI_BRANCH=$(echo $CI_BRANCH | grep -v '"'^\(master\|[0-9]\+.x\)$'"')"
   echo "export CI_BUILD_NUMBER=$CI_BUILD_NUMBER"
