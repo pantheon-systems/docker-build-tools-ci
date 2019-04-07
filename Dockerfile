@@ -75,8 +75,11 @@ RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pan
 # TODO: Re-add the site clone plugin once it has been updated to work with Terminus 2
 # RUN composer -n create-project -d /usr/local/share/terminus-plugins pantheon-systems/terminus-site-clone-plugin:^1
 
-# Add hub in case anyone wants to automate PR creation, etc.
+# Add hub in case anyone wants to automate GitHub PR creation, etc.
 RUN curl -LO https://github.com/github/hub/releases/download/v2.10.0/hub-linux-amd64-2.10.0.tgz && tar xzvf hub-linux-amd64-2.10.0.tgz && ln -s /build-tools-ci/hub-linux-amd64-2.10.0/bin/hub /usr/local/bin/hub
+
+# Add lab in case anyone wants to automate GitLab MR creation, etc.
+RUN curl -s https://raw.githubusercontent.com/zaquestion/lab/master/install.sh | bash
 
 # Add phpcs for use in checking code style
 RUN mkdir ~/phpcs && cd ~/phpcs && COMPOSER_BIN_DIR=/usr/local/bin composer require squizlabs/php_codesniffer:^2.7

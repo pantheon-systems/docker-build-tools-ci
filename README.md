@@ -24,6 +24,7 @@ This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://q
   - behat
   - php_codesniffer
   - hub
+  - lab
 - Test scripts
 
 ## Branches
