@@ -54,7 +54,7 @@ RUN mkdir -p /usr/local/share/terminus
 RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/terminus require pantheon-systems/terminus:"^2"
 
 RUN mkdir -p /usr/local/share/clu
-RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/clu require danielbachhuber/composer-lock-updater:v0.4.0
+RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/clu require danielbachhuber/composer-lock-updater:^0.4.0
 
 RUN mkdir -p /usr/local/share/drush
 RUN /usr/bin/env composer -n --working-dir=/usr/local/share/drush require drush/drush "^8"
