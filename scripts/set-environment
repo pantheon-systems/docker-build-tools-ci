@@ -46,7 +46,13 @@ CI_PR_URL=${CI_PR_URL:-$CIRCLE_PULL_REQUEST}
 CI_PROJECT_USERNAME=${CI_PROJECT_USERNAME:-$CIRCLE_PROJECT_USERNAME}
 CI_PROJECT_REPONAME=${CI_PROJECT_REPONAME:-$CIRCLE_PROJECT_REPONAME}
 TERMINUS_SITE=${TERMINUS_SITE:-$DEFAULT_SITE}
-TERMINUS_ENV=${TERMINUS_ENV:-$DEFAULT_ENV}
+
+if [[ $CI_BRANCH == "master" ]]
+then 
+  TERMINUS_ENV='dev'
+else
+  TERMINUS_ENV=${TERMINUS_ENV:-$DEFAULT_ENV}
+fi
 
 #=====================================================================================================================
 # EXPORT needed environment variables
