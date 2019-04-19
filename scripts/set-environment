@@ -34,8 +34,17 @@ GIT_EMAIL=${GIT_EMAIL:-ci-bot@pantheon.io}
 # We will also set the default site name to be the same as the repository name.
 DEFAULT_SITE=${DEFAULT_SITE:-$CI_PROJECT_NAME}
 
-# By default, we will make the environment name after the circle build number.
-DEFAULT_ENV=ci-$CI_BUILD_NUMBER
+# By default, we will make the main branch master.
+DEFAULT_BRANCH=${DEFAULT_BRANCH:-master}
+
+# If we are on the default branch.
+if [[ ${CI_BRANCH} == ${DEFAULT_BRANCH} ]] ; then
+  # Use dev as the environment.
+	DEFAULT_ENV=${DEFAULT_ENV:-dev}
+else
+  # Otherwise, name the environment after the CI build number.
+	DEFAULT_ENV=ci-$CI_BUILD_NUMBER
+fi
 
 # If there is a PR number provided, though, then we will use it instead.
 if [[ -n ${PR_NUMBER} ]] ; then
@@ -46,13 +55,7 @@ CI_PR_URL=${CI_PR_URL:-$CIRCLE_PULL_REQUEST}
 CI_PROJECT_USERNAME=${CI_PROJECT_USERNAME:-$CIRCLE_PROJECT_USERNAME}
 CI_PROJECT_REPONAME=${CI_PROJECT_REPONAME:-$CIRCLE_PROJECT_REPONAME}
 TERMINUS_SITE=${TERMINUS_SITE:-$DEFAULT_SITE}
-
-if [[ $CI_BRANCH == "master" ]]
-then 
-  TERMINUS_ENV='dev'
-else
-  TERMINUS_ENV=${TERMINUS_ENV:-$DEFAULT_ENV}
-fi
+TERMINUS_ENV=${TERMINUS_ENV:-$DEFAULT_ENV}
 
 #=====================================================================================================================
 # EXPORT needed environment variables
