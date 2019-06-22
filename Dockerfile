@@ -19,8 +19,12 @@ RUN apt-get update
 RUN apt-get install -y ruby jq curl
 RUN gem install circle-cli
 
+
+# Removed because Composer global require was failing.
+# See https://quay.io/repository/pantheon-public/build-tools-ci/build/d50d4a54-4bad-4848-9743-d886b9f01232
+
 # Parallel Composer downloads
-RUN composer -n global require -n "hirak/prestissimo:^0.3"
+# RUN composer -n global require -n "hirak/prestissimo:^0.3"
 
 # Create an unpriviliged test user
 RUN groupadd -g 999 tester && \
