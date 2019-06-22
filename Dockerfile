@@ -84,5 +84,3 @@ RUN mkdir ~/behat && \
 
 # Switch back to the unpriviliged user
 # USER circleci
-
-ENTRYPOINT ["dumb-init", "--"]
