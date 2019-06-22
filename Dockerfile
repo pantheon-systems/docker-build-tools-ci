@@ -4,9 +4,6 @@ FROM circleci/php:7-node-browsers
 # Switch to root user
 USER root
 
-# List users
-RUN cat /etc/passwd
-
 ###########################
 # Install build tools things
 ###########################
