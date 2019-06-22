@@ -12,7 +12,7 @@ WORKDIR /build-tools-ci
 ADD . /build-tools-ci
 
 # Parallel Composer downloads
-RUN composer -n global require -n "hirak/prestissimo:^0.3"
+# RUN composer -n global require -n "hirak/prestissimo:^0.3"
 
 # Install Terminus
 RUN mkdir -p /usr/local/share/terminus
