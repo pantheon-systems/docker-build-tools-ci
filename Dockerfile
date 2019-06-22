@@ -85,6 +85,3 @@ RUN mkdir ~/behat && \
         "behat/mink-extension:^2.2" \
         "behat/mink-goutte-driver:^1.2" \
         "drupal/drupal-extension:*"
-
-# Switch back to the unpriviliged user
-# USER circleci
