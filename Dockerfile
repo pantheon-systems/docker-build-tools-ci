@@ -1,6 +1,9 @@
 # Use an official Python runtime as a parent image
 FROM circleci/php:7-node-browsers
 
+# Switch to root user
+USER root
+
 ###########################
 # Install build tools things
 ###########################
@@ -11,8 +14,20 @@ WORKDIR /build-tools-ci
 # Copy the current directory contents into the container at /build-tools-ci
 ADD . /build-tools-ci
 
+# Collect the components we need for this image
+RUN apt-get update
+RUN apt-get install -y ruby jq curl
+RUN gem install circle-cli
+
 # Parallel Composer downloads
-# RUN composer -n global require -n "hirak/prestissimo:^0.3"
+RUN composer -n global require -n "hirak/prestissimo:^0.3"
+
+# Create an unpriviliged test user
+RUN groupadd -g 999 tester && \
+    useradd -r -m -u 999 -g tester tester && \
+    chown -R tester /usr/local && \
+    chown -R tester /build-tools-ci
+USER tester
 
 # Install Terminus
 RUN mkdir -p /usr/local/share/terminus
@@ -66,5 +81,8 @@ RUN mkdir ~/behat && \
         "behat/mink-extension:^2.2" \
         "behat/mink-goutte-driver:^1.2" \
         "drupal/drupal-extension:*"
+
+# Switch back to the unpriviliged user
+# USER circleci
 
 ENTRYPOINT ["dumb-init", "--"]
