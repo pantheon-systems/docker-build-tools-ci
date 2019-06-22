@@ -6,7 +6,7 @@ This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://q
 
 ## Image Contents
 
-- [Drupal PHP 7.2 Docker base image](https://github.com/drupal-docker/php/tree/master/7.2)
+- [CircleCI PHP 7.3, Node, Headless browser Docker base image](https://hub.docker.com/r/circleci/php)
 - [Terminus](https://github.com/pantheon-systems/terminus)
 - Terminus plugins
   - [Terminus Build Tools Plugin](https://github.com/pantheon-systems/terminus-build-tools-plugin)

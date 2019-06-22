@@ -1,31 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM drupaldocker/php:7.2-cli
-
-###########################
-# Install headless Chrome
-# Borrowed from https://github.com/GoogleChrome/puppeteer/docs/troubleshooting.md#running-puppeteer-in-docker
-###########################
-
-# See https://crbug.com/795759
-RUN apt-get update && apt-get install -yq gnupg2 libgconf-2-4
-
-# Install latest chrome dev package and fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)
-# Note: this installs the necessary libs to make the bundled version of Chromium that Puppeteer
-# installs, work.
-RUN apt-get update && apt-get install -y wget --no-install-recommends \
-    && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
-    && apt-get update \
-    && apt-get install -y google-chrome-unstable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst ttf-freefont \
-      --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get purge --auto-remove -y curl \
-    && rm -rf /src/*.deb
-
-# It's a good idea to use dumb-init to help prevent zombie chrome processes.
-ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 /usr/local/bin/dumb-init
-RUN chmod +x /usr/local/bin/dumb-init
-
+FROM circleci/php:7-node-browsers
 
 ###########################
 # Install build tools things
@@ -50,12 +24,15 @@ RUN groupadd -g 999 tester && \
     chown -R tester /build-tools-ci
 USER tester
 
+# Install Terminus
 RUN mkdir -p /usr/local/share/terminus
 RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/terminus require pantheon-systems/terminus:"^2"
 
+# Install CLU
 RUN mkdir -p /usr/local/share/clu
 RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/clu require danielbachhuber/composer-lock-updater:^0.5.0
 
+# Install Drush
 RUN mkdir -p /usr/local/share/drush
 RUN /usr/bin/env composer -n --working-dir=/usr/local/share/drush require drush/drush "^8"
 RUN ln -fs /usr/local/share/drush/vendor/drush/drush/drush /usr/local/bin/drush
@@ -72,7 +49,6 @@ RUN composer -n create-project -d /usr/local/share/terminus-plugins pantheon-sys
 RUN composer -n create-project -d /usr/local/share/terminus-plugins pantheon-systems/terminus-drupal-console-plugin:^1.1
 RUN composer -n create-project -d /usr/local/share/terminus-plugins pantheon-systems/terminus-mass-update:^1.1
 RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-aliases-plugin:^1.2
-# TODO: Re-add the site clone plugin once it has been updated to work with Terminus 2
 RUN composer -n create-project -d /usr/local/share/terminus-plugins pantheon-systems/terminus-site-clone-plugin:^2
 
 # Add hub in case anyone wants to automate GitHub PR creation, etc.
@@ -90,7 +66,7 @@ RUN mkdir ~/phpunit && cd ~/phpunit && COMPOSER_BIN_DIR=/usr/local/bin composer 
 # Add bats for functional testing
 RUN git clone https://github.com/sstephenson/bats.git; bats/install.sh /usr/local
 
-# Add behat for more functional testing
+# Add Behat for more functional testing
 RUN mkdir ~/behat && \
     cd ~/behat && \
     COMPOSER_BIN_DIR=/usr/local/bin \
