@@ -20,7 +20,7 @@ RUN apt-get install -y ruby jq curl
 RUN gem install circle-cli
 
 # Parallel Composer downloads
-# RUN composer -n global require -n "hirak/prestissimo:^0.3"
+RUN composer -n global require -n "hirak/prestissimo:^0.3"
 
 # Create an unpriviliged test user
 RUN groupadd -g 999 tester && \
