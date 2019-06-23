@@ -22,6 +22,9 @@ RUN gem install circle-cli
 # Parallel Composer downloads
 RUN composer -n global require -n "hirak/prestissimo:^0.3"
 
+# Install Rsync
+RUN apt-get install -y rsync
+
 # Create an unpriviliged test user
 RUN groupadd -g 999 tester && \
     useradd -r -m -u 999 -g tester tester && \
