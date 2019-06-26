@@ -29,6 +29,8 @@ This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://q
 
 ## Branches
 
+- 6.x: Use a CircleCI base image with Node JS
+- 5.x: Don't create multidevs when commits are made to the default branch, instead working directly on the dev environment
 - 4.x: Terminus 2.x and Build Tools 2.x
 - 3.x: Deprecated: Terminus 1 with Build Tools 2.0.0-beta2
 - 2.x: Terminus 1.x and Build Tools 1.x
