@@ -23,12 +23,6 @@ RUN docker-php-ext-install intl
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 RUN docker-php-ext-install gd
 
-RUN pecl install zip-1.15.4
-RUN docker-php-ext-enable zip
-
-RUN pecl install xdebug-2.7.2
-RUN docker-php-ext-enable xdebug
-
 RUN pecl install libsodium-2.0.21
 RUN docker-php-ext-enable libsodium
 
