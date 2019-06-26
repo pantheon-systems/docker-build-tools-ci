@@ -13,6 +13,7 @@ RUN apt-get update && \
 # Add necessary PHP Extensions
 RUN docker-php-ext-install intl \
         && docker-php-ext-install zip \
+        && docker-php-ext-install sodium \
         && docker-php-ext-install gd
 
 RUN pecl install zip-1.15.4 \
