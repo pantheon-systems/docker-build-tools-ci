@@ -7,9 +7,14 @@ USER root
 # Install necessary packages for PHP extensions
 RUN apt-get update && \
      apt-get install -y \
-         libzip-dev \
-         libsodium-dev \
-         libpng-dev
+        libzip-dev \
+        libsodium-dev \
+        libpng-dev \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        zlib1g-dev \
+        libicu-dev \
+        g++
 
 # Add necessary PHP Extensions
 RUN docker-php-ext-install intl \
@@ -19,6 +24,9 @@ RUN pecl install zip-1.15.4
 RUN pecl install intl-3.0.0
 RUN pecl install xdebug-2.7.2
 RUN pecl install libsodium-2.0.21
+
+RUN docker-php-ext-configure intl
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 
 RUN docker-php-ext-enable zip
 RUN docker-php-ext-enable libsodium
