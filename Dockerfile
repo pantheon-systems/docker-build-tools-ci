@@ -7,8 +7,7 @@ USER root
 # Install necessary packages for PHP extensions
 RUN apt-get update && \
      apt-get install -y \
-         libzip-dev \
-         libsodium13
+         libzip-dev
 
 # Add necessary PHP Extensions
 RUN docker-php-ext-install intl \
