@@ -8,12 +8,11 @@ USER root
 RUN apt-get update && \
      apt-get install -y \
          libzip-dev \
-         libsodium-dev
+         libsodium-dev \
+         libpng-dev
 
 # Add necessary PHP Extensions
 RUN docker-php-ext-install intl \
-        && docker-php-ext-install zip \
-        && docker-php-ext-install sodium \
         && docker-php-ext-install gd
 
 RUN pecl install zip-1.15.4 \
