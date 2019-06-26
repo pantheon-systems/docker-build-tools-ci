@@ -26,9 +26,6 @@ RUN docker-php-ext-install gd
 RUN pecl install zip-1.15.4
 RUN docker-php-ext-enable zip
 
-RUN pecl install intl-3.0.0
-RUN docker-php-ext-enable intl
-
 RUN pecl install xdebug-2.7.2
 RUN docker-php-ext-enable xdebug
 
