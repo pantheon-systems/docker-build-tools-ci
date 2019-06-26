@@ -26,7 +26,6 @@ RUN docker-php-ext-install gd
 RUN docker-php-ext-configure sodium
 RUN docker-php-ext-install sodium
 RUN pecl install libsodium-2.0.21
-RUN docker-php-ext-enable libsodium
 
 
 
