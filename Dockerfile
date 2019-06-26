@@ -17,21 +17,27 @@ RUN apt-get update && \
         g++
 
 # Add necessary PHP Extensions
-RUN docker-php-ext-install intl \
-        && docker-php-ext-install gd
+RUN docker-php-ext-configure intl
+RUN docker-php-ext-install intl
+
+RUN docker-php-ext-configure gd --with-gd --with-webp-dir --with-jpeg-dir \
+    --with-png-dir --with-zlib-dir --with-xpm-dir --with-freetype-dir \
+    --enable-gd-native-ttf
+RUN docker-php-ext-install gd
 
 RUN pecl install zip-1.15.4
-RUN pecl install intl-3.0.0
-RUN pecl install xdebug-2.7.2
-RUN pecl install libsodium-2.0.21
-
-RUN docker-php-ext-configure intl
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
-
 RUN docker-php-ext-enable zip
-RUN docker-php-ext-enable libsodium
-RUN docker-php-ext-enable xdebug
+
+RUN pecl install intl-3.0.0
 RUN docker-php-ext-enable intl
+
+RUN pecl install xdebug-2.7.2
+RUN docker-php-ext-enable xdebug
+
+RUN pecl install libsodium-2.0.21
+RUN docker-php-ext-enable libsodium
+
+
 
 ###########################
 # Install build tools things
