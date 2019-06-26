@@ -5,6 +5,10 @@ FROM circleci/php:7-node-browsers
 USER root
 
 # Add necessary PHP Extensions
+RUN docker-php-ext-install intl \
+        && docker-php-ext-install zip \
+        && docker-php-ext-install sodium
+
 RUN pecl install zip-1.15.4 \
 	&& pecl install intl-3.0.0 \
 	&& pecl install xdebug-2.7.2 \
