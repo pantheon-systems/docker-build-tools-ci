@@ -15,11 +15,15 @@ RUN apt-get update && \
 RUN docker-php-ext-install intl \
         && docker-php-ext-install gd
 
-RUN pecl install zip-1.15.4 \
-	&& pecl install intl-3.0.0 \
-	&& pecl install xdebug-2.7.2 \
-	&& pecl install libsodium-2.0.21 \
-	&& docker-php-ext-enable zip intl xdebug libsodium
+RUN pecl install zip-1.15.4
+RUN pecl install intl-3.0.0
+RUN pecl install xdebug-2.7.2
+RUN pecl install libsodium-2.0.21
+
+RUN docker-php-ext-enable zip
+RUN docker-php-ext-enable libsodium
+RUN docker-php-ext-enable xdebug
+RUN docker-php-ext-enable intl
 
 ###########################
 # Install build tools things
