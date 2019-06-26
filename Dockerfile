@@ -4,6 +4,13 @@ FROM circleci/php:7-node-browsers
 # Switch to root user
 USER root
 
+# Add necessary PHP Extensions
+RUN pecl install zip-1.15.4 \
+	&& pecl install intl-3.0.0 \
+	&& pecl install xdebug-2.7.2 \
+	&& pecl install libsodium-2.0.21 \
+	&& docker-php-ext-enable zip intl xdebug libsodium
+
 ###########################
 # Install build tools things
 ###########################
@@ -16,14 +23,11 @@ ADD . /build-tools-ci
 
 # Collect the components we need for this image
 RUN apt-get update
-RUN apt-get install -y ruby jq curl
+RUN apt-get install -y ruby jq curl rsync
 RUN gem install circle-cli
 
 # Parallel Composer downloads
 RUN composer -n global require -n "hirak/prestissimo:^0.3"
-
-# Install Rsync
-RUN apt-get install -y rsync
 
 # Create an unpriviliged test user
 RUN groupadd -g 999 tester && \
