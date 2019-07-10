@@ -23,7 +23,7 @@ USER tester
 RUN mkdir -p /usr/local/share/terminus
 RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/terminus require pantheon-systems/terminus:"^1.9"
 RUN mkdir -p /usr/local/share/drush
-RUN /usr/bin/env composer -n --working-dir=/usr/local/share/drush require drush/drush "^8"
+RUN /usr/bin/env composer -n --working-dir=/usr/local/share/drush require drush/drush "^8.3.0"
 RUN ln -fs /usr/local/share/drush/vendor/drush/drush/drush /usr/local/bin/drush
 RUN chmod +x /usr/local/bin/drush
 
