@@ -56,6 +56,7 @@ CI_PROJECT_USERNAME=${CI_PROJECT_USERNAME:-$CIRCLE_PROJECT_USERNAME}
 CI_PROJECT_REPONAME=${CI_PROJECT_REPONAME:-$CIRCLE_PROJECT_REPONAME}
 TERMINUS_SITE=${TERMINUS_SITE:-$DEFAULT_SITE}
 TERMINUS_ENV=${TERMINUS_ENV:-$DEFAULT_ENV}
+TERMINUS_SITE_UUID=$(terminus site:info $TERMINUS_SITE --field=id)
 
 #=====================================================================================================================
 # EXPORT needed environment variables
@@ -80,6 +81,7 @@ TERMINUS_ENV=${TERMINUS_ENV:-$DEFAULT_ENV}
   echo "export DEFAULT_ENV='$DEFAULT_ENV'"
   echo 'export TERMINUS_HIDE_UPDATE_MESSAGE=1'
   echo "export TERMINUS_SITE='$TERMINUS_SITE'"
+  echo "export TERMINUS_SITE_UUID='$TERMINUS_SITE_UUID'"
   echo "export TERMINUS_ENV='$TERMINUS_ENV'"
   # TODO: Reconcile with environment variables set by build:project:create
   echo 'export BEHAT_ADMIN_PASSWORD=$(openssl rand -base64 24)'
