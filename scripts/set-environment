@@ -56,7 +56,6 @@ CI_PROJECT_USERNAME=${CI_PROJECT_USERNAME:-$CIRCLE_PROJECT_USERNAME}
 CI_PROJECT_REPONAME=${CI_PROJECT_REPONAME:-$CIRCLE_PROJECT_REPONAME}
 TERMINUS_SITE=${TERMINUS_SITE:-$DEFAULT_SITE}
 TERMINUS_ENV=${TERMINUS_ENV:-$DEFAULT_ENV}
-TERMINUS_SITE_UUID=$(terminus site:info $TERMINUS_SITE --field=id)
 
 #=====================================================================================================================
 # EXPORT needed environment variables
@@ -81,7 +80,6 @@ TERMINUS_SITE_UUID=$(terminus site:info $TERMINUS_SITE --field=id)
   echo "export DEFAULT_ENV='$DEFAULT_ENV'"
   echo 'export TERMINUS_HIDE_UPDATE_MESSAGE=1'
   echo "export TERMINUS_SITE='$TERMINUS_SITE'"
-  echo "export TERMINUS_SITE_UUID='$TERMINUS_SITE_UUID'"
   echo "export TERMINUS_ENV='$TERMINUS_ENV'"
   # TODO: Reconcile with environment variables set by build:project:create
   echo 'export BEHAT_ADMIN_PASSWORD=$(openssl rand -base64 24)'
@@ -94,6 +92,23 @@ TERMINUS_SITE_UUID=$(terminus site:info $TERMINUS_SITE --field=id)
   echo "export ARTIFACTS_DIR='artifacts'"
   echo "export ARTIFACTS_FULL_DIR='/tmp/artifacts'"
 ) >> $BASH_ENV
+
+# If a Terminus machine token and site name are defined
+if [ -n "$TERMINUS_MACHINE_TOKEN" && -n "$TERMINUS_SITE" ]
+then
+
+  # Authenticate with Terminus
+  terminus -n auth:login --machine-token=$TERMINUS_MACHINE_TOKEN > /dev/null 2>&1
+
+  # Use Terminus to fetch variables
+  TERMINUS_SITE_UUID=$(terminus site:info $TERMINUS_SITE --field=id)
+
+  # And add those variables to $BASH_ENV
+  (
+    echo "export TERMINUS_SITE_UUID='$TERMINUS_SITE_UUID'"
+  ) >> $BASH_ENV
+fi
+
 source $BASH_ENV
 
 echo 'Contents of BASH_ENV:'
