@@ -92,6 +92,23 @@ TERMINUS_ENV=${TERMINUS_ENV:-$DEFAULT_ENV}
   echo "export ARTIFACTS_DIR='artifacts'"
   echo "export ARTIFACTS_FULL_DIR='/tmp/artifacts'"
 ) >> $BASH_ENV
+
+# If a Terminus machine token and site name are defined
+if [ -n "$TERMINUS_MACHINE_TOKEN" && -n "$TERMINUS_SITE" ]
+then
+
+  # Authenticate with Terminus
+  terminus -n auth:login --machine-token=$TERMINUS_MACHINE_TOKEN > /dev/null 2>&1
+
+  # Use Terminus to fetch variables
+  TERMINUS_SITE_UUID=$(terminus site:info $TERMINUS_SITE --field=id)
+
+  # And add those variables to $BASH_ENV
+  (
+    echo "export TERMINUS_SITE_UUID='$TERMINUS_SITE_UUID'"
+  ) >> $BASH_ENV
+fi
+
 source $BASH_ENV
 
 echo 'Contents of BASH_ENV:'
