@@ -27,7 +27,8 @@ RUN docker-php-ext-configure sodium
 RUN docker-php-ext-install sodium
 RUN pecl install libsodium-2.0.21
 
-
+# Set the memory limit to unlimited for expensive Composer interactions
+RUN echo "memory_limit=-1" > /usr/local/etc/php/conf.d/memory.ini
 
 ###########################
 # Install build tools things
