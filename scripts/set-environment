@@ -81,6 +81,7 @@ TERMINUS_ENV=${TERMINUS_ENV:-$DEFAULT_ENV}
   echo 'export TERMINUS_HIDE_UPDATE_MESSAGE=1'
   echo "export TERMINUS_SITE='$TERMINUS_SITE'"
   echo "export TERMINUS_ENV='$TERMINUS_ENV'"
+  echo "export DEFAULT_BRANCH='$DEFAULT_BRANCH'"
   # TODO: Reconcile with environment variables set by build:project:create
   echo 'export BEHAT_ADMIN_PASSWORD=$(openssl rand -base64 24)'
   echo 'export BEHAT_ADMIN_USERNAME=pantheon-ci-testing-$CI_BUILD_NUMBER'
