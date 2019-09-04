@@ -131,7 +131,8 @@ git config --global core.fileMode false
 
 # Re-install the Terminus Build Tools plugin if requested
 if [ -n $BUILD_TOOLS_VERSION ] && [ "$BUILD_TOOLS_VERSION" <> 'dev-master' ]; then
-  echo "Install Terminus Build Tools Plugin version $BUILD_TOOLS_VERSION"
+  echo "Install Terminus Build Tools Plugin version $BUILD_TOOLS_VERSION."
+  echo "Note that it is NOT RECOMMENDED to define BUILD_TOOLS_VERSION, save in the Terminus Build Tools plugin tests themselves. All other tests should use the version bundled with the container."
   rm -rf ${TERMINUS_PLUGINS_DIR:-~/.terminus/plugins}/terminus-build-tools-plugin
-  composer -n create-project -d ${TERMINUS_PLUGINS_DIR:-~/.terminus/plugins} pantheon-systems/terminus-build-tools-plugin:$BUILD_TOOLS_VERSION
+  composer -n create-project --no-dev -d ${TERMINUS_PLUGINS_DIR:-~/.terminus/plugins} pantheon-systems/terminus-build-tools-plugin:$BUILD_TOOLS_VERSION
 fi
