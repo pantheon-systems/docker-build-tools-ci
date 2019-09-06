@@ -14,6 +14,7 @@ RUN apt-get update && \
         libjpeg62-turbo-dev \
         zlib1g-dev \
         libicu-dev \
+        php7.3-bcmath \
         g++
 
 # Add necessary PHP Extensions
