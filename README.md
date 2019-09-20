@@ -11,7 +11,7 @@ This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://q
 - Terminus plugins
   - [Terminus Build Tools Plugin](https://github.com/pantheon-systems/terminus-build-tools-plugin)
   - [Terminus Secrets Plugin](https://github.com/pantheon-systems/terminus-secrets-plugin)
-  - [Terminus Rsync Plugin](https://github.com/pantheon-systems/terminus-rsync)
+  - [Terminus Rsync Plugin](https://github.com/pantheon-systems/terminus-rsync-plugin)
   - [Terminus Quicksilver Plugin](https://github.com/pantheon-systems/terminus-quicksilver-plugin)
   - [Terminus Composer Plugin](https://github.com/pantheon-systems/terminus-composer-plugin)
   - [Terminus Drupal Console Plugin](https://github.com/pantheon-systems/terminus-drupal-console-plugin)
