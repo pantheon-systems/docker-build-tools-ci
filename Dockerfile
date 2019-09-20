@@ -90,6 +90,9 @@ RUN curl -LO https://github.com/github/hub/releases/download/v2.11.2/hub-linux-a
 # Add lab in case anyone wants to automate GitLab MR creation, etc.
 RUN curl -s https://raw.githubusercontent.com/zaquestion/lab/master/install.sh | bash
 
+# Add Terminus Bitbucket plugin in case anyone wants to automate Bitbucket PR creation, etc.
+RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins aaronbauman/terminus-bitbucket-plugin:^2
+
 # Add phpcs for use in checking code style
 RUN mkdir ~/phpcs && cd ~/phpcs && COMPOSER_BIN_DIR=/usr/local/bin composer require squizlabs/php_codesniffer:^2.7
 
