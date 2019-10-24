@@ -14,7 +14,11 @@ RUN apt-get update && \
         libjpeg62-turbo-dev \
         zlib1g-dev \
         libicu-dev \
-        g++
+        g++ \
+        python-pip
+
+# installs yq a yaml/xml parser that wraps JQ
+RUN pip install yq
 
 # Add necessary PHP Extensions
 RUN docker-php-ext-configure intl
