@@ -99,7 +99,7 @@ if [[ -n "$TERMINUS_MACHINE_TOKEN" && -n "$TERMINUS_SITE" ]]
 then
 
   # Authenticate with Terminus
-  terminus -n auth:login --machine-token=$TERMINUS_MACHINE_TOKEN > /dev/null 2>&1
+  terminus -n auth:login --machine-token="$TERMINUS_MACHINE_TOKEN" > /dev/null 2>&1
 
   # Use Terminus to fetch variables
   TERMINUS_SITE_UUID=$(terminus site:info $TERMINUS_SITE --field=id)
