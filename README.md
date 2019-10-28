@@ -17,6 +17,7 @@ This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://q
   - [Terminus Drupal Console Plugin](https://github.com/pantheon-systems/terminus-drupal-console-plugin)
   - [Terminus Mass Update Plugin](https://github.com/pantheon-systems/terminus-mass-update)
   - [Terminus Aliases Plugin](https://github.com/pantheon-systems/terminus-aliases-plugin)
+  - [Terminus CLU Plugin](https://github.com/pantheon-systems/terminus-clu-plugin)
 - Test tools
   - headless chrome
   - phpunit
