@@ -8,6 +8,7 @@ USER root
 RUN apt-get update && \
      apt-get install -y \
         dnsutils \
+        imagick \
         libzip-dev \
         libsodium-dev \
         libpng-dev \
