@@ -8,7 +8,7 @@ USER root
 RUN apt-get update && \
      apt-get install -y \
         dnsutils \
-        imagemagick \
+        libmagickwand-dev \
         libzip-dev \
         libsodium-dev \
         libpng-dev \
@@ -29,7 +29,12 @@ RUN docker-php-ext-configure sodium
 RUN docker-php-ext-install sodium
 RUN pecl install libsodium-2.0.21
 
+RUN pecl install imagick
+RUN docker-php-ext-enable imagick
+
 RUN docker-php-ext-install bcmath
+
+
 
 # Set the memory limit to unlimited for expensive Composer interactions
 RUN echo "memory_limit=-1" > /usr/local/etc/php/conf.d/memory.ini
