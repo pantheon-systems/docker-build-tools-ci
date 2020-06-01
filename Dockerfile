@@ -115,8 +115,9 @@ RUN mkdir ~/behat && \
     cd ~/behat && \
     COMPOSER_BIN_DIR=/usr/local/bin \
     composer require \
-        "behat/behat:^3.5" \
+        "behat/behat:^3.1" \
         "behat/mink:*" \
         "behat/mink-extension:^2.2" \
         "behat/mink-goutte-driver:^1.2" \
-        "drupal/drupal-extension:*"
+        "drupal/drupal-extension:^4.1" \
+        "drupal/drupal-driver:^2.1"
