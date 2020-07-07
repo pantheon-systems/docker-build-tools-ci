@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM circleci/php:7.3-node-browsers
+FROM circleci/php:7.4-node-browsers
 
 # Switch to root user
 USER root
@@ -14,14 +14,21 @@ RUN apt-get update && \
         libjpeg62-turbo-dev \
         zlib1g-dev \
         libicu-dev \
-        g++
+        g++ \
+        git
 
 # Add necessary PHP Extensions
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-install intl
 
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
-RUN docker-php-ext-install gd
+RUN pecl config-set php_ini /usr/local/etc/php/php.ini && \
+        pear config-set php_ini /usr/local/etc/php/php.ini && \
+        pecl channel-update pecl.php.net
+
+
+RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd
+
 
 RUN docker-php-ext-configure sodium
 RUN docker-php-ext-install sodium
