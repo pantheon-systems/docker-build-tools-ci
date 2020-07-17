@@ -57,6 +57,20 @@ CI_PROJECT_REPONAME=${CI_PROJECT_REPONAME:-$CIRCLE_PROJECT_REPONAME}
 TERMINUS_SITE=${TERMINUS_SITE:-$DEFAULT_SITE}
 TERMINUS_ENV=${TERMINUS_ENV:-$DEFAULT_ENV}
 
+# If any Pantheon environments are locked, users may provide a URL-encoded
+# 'username:password' string in an environment variable to include the
+# HTTP Basic Authentication.
+MULTIDEV_SITE_BASIC_AUTH=${MULTIDEV_SITE_BASIC_AUTH:-$SITE_BASIC_AUTH}
+DEV_SITE_BASIC_AUTH=${DEV_SITE_BASIC_AUTH:-$SITE_BASIC_AUTH}
+TEST_SITE_BASIC_AUTH=${TEST_SITE_BASIC_AUTH:-$SITE_BASIC_AUTH}
+LIVE_SITE_BASIC_AUTH=${LIVE_SITE_BASIC_AUTH:-$SITE_BASIC_AUTH}
+
+# Prepare the Basic Authentication strings, appending the "@" sign if not empty.
+MULTIDEV_SITE_BASIC_AUTH=${MULTIDEV_SITE_BASIC_AUTH:+"$MULTIDEV_SITE_BASIC_AUTH@"}
+DEV_SITE_BASIC_AUTH=${DEV_SITE_BASIC_AUTH:+"$DEV_SITE_BASIC_AUTH@"}
+TEST_SITE_BASIC_AUTH=${TEST_SITE_BASIC_AUTH:+"$TEST_SITE_BASIC_AUTH@"}
+LIVE_SITE_BASIC_AUTH=${LIVE_SITE_BASIC_AUTH:+"$LIVE_SITE_BASIC_AUTH@"}
+
 #=====================================================================================================================
 # EXPORT needed environment variables
 #
@@ -86,10 +100,10 @@ TERMINUS_ENV=${TERMINUS_ENV:-$DEFAULT_ENV}
   echo 'export BEHAT_ADMIN_PASSWORD=$(openssl rand -base64 24)'
   echo 'export BEHAT_ADMIN_USERNAME=pantheon-ci-testing-$CI_BUILD_NUMBER'
   echo 'export BEHAT_ADMIN_EMAIL=no-reply+ci-$CI_BUILD_NUMBER@getpantheon.com'
-  echo "export MULTIDEV_SITE_URL='https://$TERMINUS_ENV-$TERMINUS_SITE.pantheonsite.io/'"
-  echo "export DEV_SITE_URL='https://dev-$TERMINUS_SITE.pantheonsite.io/'"
-  echo "export TEST_SITE_URL='https://test-$TERMINUS_SITE.pantheonsite.io/'"
-  echo "export LIVE_SITE_URL='https://live-$TERMINUS_SITE.pantheonsite.io/'"
+  echo "export MULTIDEV_SITE_URL='https://${MULTIDEV_SITE_BASIC_AUTH}$TERMINUS_ENV-$TERMINUS_SITE.pantheonsite.io/'"
+  echo "export DEV_SITE_URL='https://${DEV_SITE_BASIC_AUTH}dev-$TERMINUS_SITE.pantheonsite.io/'"
+  echo "export TEST_SITE_URL='https://${TEST_SITE_BASIC_AUTH}test-$TERMINUS_SITE.pantheonsite.io/'"
+  echo "export LIVE_SITE_URL='https://${LIVE_SITE_BASIC_AUTH}live-$TERMINUS_SITE.pantheonsite.io/'"
   echo "export ARTIFACTS_DIR='artifacts'"
   echo "export ARTIFACTS_FULL_DIR='/tmp/artifacts'"
 ) >> $BASH_ENV
