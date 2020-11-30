@@ -64,9 +64,6 @@ RUN gem install circle-cli
 # Make sure we are on the latest version of Composer
 RUN composer selfupdate
 
-# Parallel Composer downloads
-RUN composer -n global require -n "hirak/prestissimo:^0.3"
-
 # Create an unpriviliged test user
 RUN groupadd -g 999 tester && \
     useradd -r -m -u 999 -g tester tester && \
@@ -84,7 +81,7 @@ RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/
 
 # Install Drush
 RUN mkdir -p /usr/local/share/drush
-RUN /usr/bin/env composer -n --working-dir=/usr/local/share/drush require drush/drush "^8"
+RUN /usr/bin/env composer -n --working-dir=/usr/local/share/drush require drush/drush "^10"
 RUN ln -fs /usr/local/share/drush/vendor/drush/drush/drush /usr/local/bin/drush
 RUN chmod +x /usr/local/bin/drush
 
