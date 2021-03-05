@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM circleci/php:7.3-node-browsers
+FROM circleci/php:7.4-node-browsers
 
 # Switch to root user
 USER root
@@ -16,14 +16,21 @@ RUN apt-get update && \
         libjpeg62-turbo-dev \
         zlib1g-dev \
         libicu-dev \
-        g++
+        g++ \
+        git
 
 # Add necessary PHP Extensions
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-install intl
 
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
-RUN docker-php-ext-install gd
+RUN pecl config-set php_ini /usr/local/etc/php/php.ini && \
+        pear config-set php_ini /usr/local/etc/php/php.ini && \
+        pecl channel-update pecl.php.net
+
+
+RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd
+
 
 RUN docker-php-ext-configure sodium
 RUN docker-php-ext-install sodium
@@ -57,9 +64,6 @@ RUN gem install circle-cli
 # Make sure we are on the latest version of Composer
 RUN composer selfupdate
 
-# Parallel Composer downloads
-RUN composer -n global require -n "hirak/prestissimo:^0.3"
-
 # Create an unpriviliged test user
 RUN groupadd -g 999 tester && \
     useradd -r -m -u 999 -g tester tester && \
@@ -77,7 +81,7 @@ RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/
 
 # Install Drush
 RUN mkdir -p /usr/local/share/drush
-RUN /usr/bin/env composer -n --working-dir=/usr/local/share/drush require drush/drush "^8"
+RUN /usr/bin/env composer -n --working-dir=/usr/local/share/drush require drush/drush "^10"
 RUN ln -fs /usr/local/share/drush/vendor/drush/drush/drush /usr/local/bin/drush
 RUN chmod +x /usr/local/bin/drush
 
