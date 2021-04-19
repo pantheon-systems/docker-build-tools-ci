@@ -61,6 +61,9 @@ RUN composer selfupdate --1
 # Parallel Composer downloads
 RUN composer -n global require -n "hirak/prestissimo:^0.3"
 
+# Add lab in case anyone wants to automate GitLab MR creation, etc.
+RUN curl -s https://raw.githubusercontent.com/zaquestion/lab/master/install.sh | bash
+
 # Create an unpriviliged test user
 RUN groupadd -g 999 tester && \
     useradd -r -m -u 999 -g tester tester && \
@@ -94,9 +97,6 @@ RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pan
 RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-drupal-console-plugin:^1.1
 RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-mass-update:^1.1
 RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-site-clone-plugin:^2
-
-# Add lab in case anyone wants to automate GitLab MR creation, etc.
-RUN curl -s https://raw.githubusercontent.com/zaquestion/lab/master/install.sh | bash
 
 # Add phpcs for use in checking code style
 RUN mkdir ~/phpcs && cd ~/phpcs && COMPOSER_BIN_DIR=/usr/local/bin composer require squizlabs/php_codesniffer:^2.7
