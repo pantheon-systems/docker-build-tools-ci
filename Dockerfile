@@ -52,7 +52,7 @@ ADD . /build-tools-ci
 
 # Collect the components we need for this image
 RUN apt-get update
-RUN apt-get install -y ruby jq curl rsync
+RUN apt-get install -y ruby jq curl rsync hub
 RUN gem install circle-cli
 
 # Make sure we are on the latest version of Composer
@@ -94,9 +94,6 @@ RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pan
 RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-drupal-console-plugin:^1.1
 RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-mass-update:^1.1
 RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-site-clone-plugin:^2
-
-# Add hub in case anyone wants to automate GitHub PR creation, etc.
-RUN curl -LO https://github.com/github/hub/releases/download/v2.11.2/hub-linux-amd64-2.11.2.tgz && tar xzvf hub-linux-amd64-2.11.2.tgz && ln -s /build-tools-ci/hub-linux-amd64-2.11.2/bin/hub /usr/local/bin/hub
 
 # Add lab in case anyone wants to automate GitLab MR creation, etc.
 RUN curl -s https://raw.githubusercontent.com/zaquestion/lab/master/install.sh | bash
