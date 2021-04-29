@@ -12,6 +12,7 @@ set -eo pipefail
 #
 #   - CI_PULL_REQUEST: URL to the current pull request; used to set PR_NUMBER
 #   - DEFAULT_SITE: name of the repository; used to set TERMINUS_SITE
+#   - DEFAULT_BRANCH: The default Git branch; used to set DEFAULT_ENV
 #
 # Note that any environment variable given above is not set, then
 # it will be assigned its value from the corresponding CircleCI
@@ -34,16 +35,25 @@ GIT_EMAIL=${GIT_EMAIL:-ci-bot@pantheon.io}
 # We will also set the default site name to be the same as the repository name.
 DEFAULT_SITE=${DEFAULT_SITE:-$CI_PROJECT_NAME}
 
+# Check what the default branch is from Git.
+if [[ -z "$DEFAULT_BRANCH" && -n "$CIRCLE_REPOSITORY_URL" ]]; then
+  DEFAULT_GIT_BRANCH=$(git remote show $CIRCLE_REPOSITORY_URL | grep 'HEAD branch' | cut -d' ' -f5)
+  if [[ -n "$DEFAULT_GIT_BRANCH" ]]; then
+    DEFAULT_BRANCH=${DEFAULT_BRANCH:-$DEFAULT_GIT_BRANCH}
+  fi
+fi
+
 # By default, we will make the main branch master.
+# @todo Update this default to "main" since it is the new Github default.
 DEFAULT_BRANCH=${DEFAULT_BRANCH:-master}
 
 # If we are on the default branch.
 if [[ ${CI_BRANCH} == ${DEFAULT_BRANCH} ]] ; then
   # Use dev as the environment.
-	DEFAULT_ENV=${DEFAULT_ENV:-dev}
+  DEFAULT_ENV=${DEFAULT_ENV:-dev}
 else
   # Otherwise, name the environment after the CI build number.
-	DEFAULT_ENV=ci-$CI_BUILD_NUMBER
+  DEFAULT_ENV=ci-$CI_BUILD_NUMBER
 fi
 
 # If there is a PR number provided, though, then we will use it instead.
