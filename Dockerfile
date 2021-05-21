@@ -39,16 +39,18 @@ ADD . /build-tools-ci
 
 # Collect the components we need for this image
 RUN apt-get update
-RUN apt-get install -y ruby jq curl
+RUN apt-get install -y --allow-unauthenticated ruby jq curl
 RUN gem install circle-cli
 RUN composer -n global require -n "hirak/prestissimo:^0.3"
 
-# Create an unpriviliged testuser
-RUN groupadd -g 999 tester && \
-    useradd -r -m -u 999 -g tester tester && \
-    chown -R tester /usr/local && \
-    chown -R tester /build-tools-ci
-USER tester
+# Update git version.
+RUN echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu xenial main" >> /etc/apt/sources.list && \
+    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E1DD270288B4E6030699E45FA1715D88E1DF1F24 && \
+    apt update -y && \
+    apt install -y git
+
+# Add lab in case anyone wants to automate GitLab MR creation, etc.
+RUN curl -s https://raw.githubusercontent.com/zaquestion/lab/master/install.sh | bash
 
 RUN mkdir -p /usr/local/share/terminus
 RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/terminus require pantheon-systems/terminus:"^2"
@@ -75,11 +77,15 @@ RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pan
 # TODO: Re-add the site clone plugin once it has been updated to work with Terminus 2
 RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-site-clone-plugin:^2
 
+# Create an unpriviliged testuser
+RUN groupadd -g 999 tester && \
+    useradd -r -m -u 999 -g tester tester && \
+    chown -R tester /usr/local && \
+    chown -R tester /build-tools-ci
+USER tester
+
 # Add hub in case anyone wants to automate GitHub PR creation, etc.
 RUN curl -LO https://github.com/github/hub/releases/download/v2.11.2/hub-linux-amd64-2.11.2.tgz && tar xzvf hub-linux-amd64-2.11.2.tgz && ln -s /build-tools-ci/hub-linux-amd64-2.11.2/bin/hub /usr/local/bin/hub
-
-# Add lab in case anyone wants to automate GitLab MR creation, etc.
-RUN curl -s https://raw.githubusercontent.com/zaquestion/lab/master/install.sh | bash
 
 # Add phpcs for use in checking code style
 RUN mkdir ~/phpcs && cd ~/phpcs && COMPOSER_BIN_DIR=/usr/local/bin composer require squizlabs/php_codesniffer:^2.7
