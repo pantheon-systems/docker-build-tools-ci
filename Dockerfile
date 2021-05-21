@@ -44,17 +44,10 @@ RUN gem install circle-cli
 RUN composer -n global require -n "hirak/prestissimo:^0.3"
 
 # Update git version.
-RUN apt update -y && \
-    apt install -y make libssl-dev libghc-zlib-dev libcurl4-gnutls-dev libexpat1-dev gettext unzip && \
-    wget https://github.com/git/git/archive/v2.31.1.tar.gz -O git.tar.gz && \
-    tar -xf git.tar.gz && \
-    cd git-* && \
-    make prefix=/usr/local all && \
-    make prefix=/usr/local install && \
-    mv /usr/bin/git /usr/bin/git_old && \
-    ln -s /usr/local/bin/git /usr/bin/git && \
-    cd ../ && \
-    rm -rf git*
+RUN echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu xenial main" >> /etc/apt/sources.list && \
+    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E1DD270288B4E6030699E45FA1715D88E1DF1F24 && \
+    apt update -y && \
+    apt install -y git
 
 # Add lab in case anyone wants to automate GitLab MR creation, etc.
 RUN curl -s https://raw.githubusercontent.com/zaquestion/lab/master/install.sh | bash
