@@ -47,7 +47,7 @@ RUN composer -n global require -n "hirak/prestissimo:^0.3"
 RUN echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu xenial main" >> /etc/apt/sources.list && \
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E1DD270288B4E6030699E45FA1715D88E1DF1F24 && \
     apt update -y && \
-    apt install -y git
+    apt install -y git python3
 
 # Add lab in case anyone wants to automate GitLab MR creation, etc.
 RUN curl -s https://raw.githubusercontent.com/zaquestion/lab/master/install.sh | bash
