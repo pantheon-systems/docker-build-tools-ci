@@ -1,5 +1,7 @@
+ARG PHPVERSION
+
 # Use an official Python runtime as a parent image
-FROM circleci/php:7.4-node-browsers
+FROM circleci/php:${PHPVERSION}-node-browsers
 
 # Switch to root user
 USER root
@@ -33,7 +35,7 @@ RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/i
 
 RUN docker-php-ext-configure sodium
 RUN docker-php-ext-install sodium
-RUN pecl install libsodium-2.0.21
+RUN pecl install libsodium
 
 RUN pecl install imagick
 RUN docker-php-ext-enable imagick
@@ -107,7 +109,7 @@ RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pan
 RUN mkdir ~/phpcs && cd ~/phpcs && COMPOSER_BIN_DIR=/usr/local/bin composer require squizlabs/php_codesniffer:^2.7
 
 # Add phpunit for unit testing
-RUN mkdir ~/phpunit && cd ~/phpunit && COMPOSER_BIN_DIR=/usr/local/bin composer require phpunit/phpunit:^6
+RUN mkdir ~/phpunit && cd ~/phpunit && COMPOSER_BIN_DIR=/usr/local/bin composer require phpunit/phpunit
 
 # Add bats for functional testing
 RUN git clone https://github.com/sstephenson/bats.git; bats/install.sh /usr/local
