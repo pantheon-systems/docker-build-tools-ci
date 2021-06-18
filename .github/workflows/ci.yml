@@ -29,4 +29,4 @@ jobs:
           push: true
           tags: kporras07/docker-build-tools-ci:7.4.x
           build-args:
-            PHPVERSION: 7.4
+            - PHPVERSION: 7.4
