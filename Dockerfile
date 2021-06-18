@@ -28,10 +28,8 @@ RUN pecl config-set php_ini /usr/local/etc/php/php.ini && \
         pear config-set php_ini /usr/local/etc/php/php.ini && \
         pecl channel-update pecl.php.net
 
-
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd
-
 
 RUN docker-php-ext-configure sodium
 RUN docker-php-ext-install sodium
@@ -43,6 +41,9 @@ RUN docker-php-ext-enable imagick
 RUN docker-php-ext-install bcmath
 
 RUN docker-php-ext-install soap
+
+RUN pecl install pcov
+RUN docker-php-ext-enable pcov
 
 # Set the memory limit to unlimited for expensive Composer interactions
 RUN echo "memory_limit=-1" > /usr/local/etc/php/conf.d/memory.ini
@@ -64,9 +65,6 @@ RUN gem install circle-cli
 
 # Make sure we are on the latest version of Composer
 RUN composer selfupdate --2
-
-# Parallel Composer downloads
-RUN composer -n global require -n "hirak/prestissimo:^0.3"
 
 # Add lab in case anyone wants to automate GitLab MR creation, etc.
 RUN curl -s https://raw.githubusercontent.com/zaquestion/lab/master/install.sh | bash
