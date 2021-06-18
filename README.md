@@ -36,3 +36,13 @@ This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://q
 - 3.x: Deprecated: Terminus 1 with Build Tools 2.0.0-beta2
 - 2.x: Terminus 1.x and Build Tools 1.x
 - 1.x: Deprecated
+
+## Building 6.x Docker images
+
+From project root:
+
+```
+# PHPVERSION could be 7.4 or 8.0.
+PHPVERSION=7.4
+docker build --build-arg PHPVERSION=$PHPVERSION -t build-tools-ci-${PHPVERSION} .
+```
