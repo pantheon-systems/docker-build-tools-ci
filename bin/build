@@ -1,3 +1,0 @@
-#!/bin/bash
-
-docker build -t milken/build-tools:latest . && docker push milken/build-tools:latest
