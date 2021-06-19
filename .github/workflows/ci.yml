@@ -8,7 +8,7 @@ on:
 jobs:
   docker-build:
     runs-on: ubuntu-latest
-    name: Checkout
+    name: Build and push image
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -27,6 +27,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: kporras07/docker-build-tools-ci:7.4.x
+          tags: quay.io/kporras07/docker-build-tools-ci:7.4.x
           build-args: |
             PHPVERSION=7.4
