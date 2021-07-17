@@ -30,6 +30,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: quay.io/pantheon-public/build-tools-ci:7.x-php${{ matrix.php-versions }}.x
+          tags: quay.io/pantheon-public/build-tools-ci:7.x-php${{ matrix.php-versions }}
           build-args: |
             PHPVERSION=${{ matrix.php-versions }}
