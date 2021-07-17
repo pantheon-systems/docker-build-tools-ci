@@ -37,7 +37,7 @@ This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://q
 - 2.x: Terminus 1.x and Build Tools 1.x
 - 1.x: Deprecated
 
-## Building 6.x Docker images
+## Building 7.x Docker images
 
 From project root:
 
