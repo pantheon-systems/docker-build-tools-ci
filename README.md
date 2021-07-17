@@ -30,9 +30,38 @@ This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://q
 
 ## Branches
 
+- 7.x: PHP 7.4 and PHP 8.0 images using CircleCI base image with Node JS.
 - 6.x: Use a CircleCI base image with Node JS
 - 5.x: Don't create multidevs when commits are made to the default branch, instead working directly on the dev environment
 - 4.x: Terminus 2.x and Build Tools 2.x
 - 3.x: Deprecated: Terminus 1 with Build Tools 2.0.0-beta2
 - 2.x: Terminus 1.x and Build Tools 1.x
 - 1.x: Deprecated
+
+## 7.x Docker images
+
+### Building the image
+
+From project root:
+
+```
+# PHPVERSION could be 7.4 or 8.0.
+PHPVERSION=7.4
+docker build --build-arg PHPVERSION=$PHPVERSION -t quay.io/pantheon-public/build-tools-ci:7.x-php${PHPVERSION} .
+```
+
+### Using the image
+
+#### Image name and tag
+
+- quay.io/pantheon-public/build-tools-ci:7.x-php7.4
+- quay.io/pantheon-public/build-tools-ci:7.x-php8.0
+
+#### Usage example
+
+Set the right image tag in the following files and it will work as expected:
+
+- [Drupal 8 Github Actions](https://github.com/pantheon-systems/example-drops-8-composer/blob/master/.ci/.github/workflows/build_deploy_and_test.yml)
+- [Drupal 8 CircleCI](https://github.com/pantheon-systems/example-drops-8-composer/blob/master/.circleci/config.yml)
+- [Drupal 8 GitlabCI](https://github.com/pantheon-systems/example-drops-8-composer/blob/master/.gitlab-ci.yml)
+- [Drupal 8 Bitbucket Pipelines](https://github.com/pantheon-systems/example-drops-8-composer/blob/master/bitbucket-pipelines.yml)
