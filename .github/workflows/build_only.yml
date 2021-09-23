@@ -2,7 +2,7 @@ name: Docker Build Tools Image (Build Only)
 on:
   push:
     branches-ignore:
-      - '3.x'
+      - '7.x'
 jobs:
   docker-build:
     runs-on: ubuntu-latest
