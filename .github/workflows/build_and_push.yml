@@ -1,10 +1,8 @@
-name: Docker Build Tools
+name: Docker Build Tools Image (Build and Push)
 on:
   push:
-  pull_request:
-  repository_dispatch:
-  schedule:
-    - cron: '0 0 * * *'
+    branches:
+      - '3.x'
 jobs:
   docker-build:
     runs-on: ubuntu-latest
@@ -19,7 +17,13 @@ jobs:
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Login to DockerHub
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login to Quay
         uses: docker/login-action@v1
         with:
           registry: quay.io
@@ -30,6 +34,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: quay.io/pantheon-public/build-tools-ci:7.x-php${{ matrix.php-versions }}
+          tags: |
+            pantheonpublic/build-tools-ci:7.x-php${{ matrix.php-versions }}
+            quay.io/pantheon-public/build-tools-ci:7.x-php${{ matrix.php-versions }}
           build-args: |
             PHPVERSION=${{ matrix.php-versions }}
