@@ -32,6 +32,7 @@ This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://q
 
 ## Branches
 
+- 7.x: Use a CircleCI base image with Node JS and composer 2. Produces 7.x-php7.3, 7.x-php7.4 and 7.x-php8.0 image tags.
 - 6.x: Use a CircleCI base image with Node JS
 - 5.x: Don't create multidevs when commits are made to the default branch, instead working directly on the dev environment
 - 4.x: Terminus 2.x and Build Tools 2.x
