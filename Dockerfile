@@ -84,7 +84,7 @@ USER tester
 
 # Install Terminus
 RUN mkdir -p /usr/local/share/terminus
-RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/terminus require pantheon-systems/terminus:"^2.4"
+RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/terminus require pantheon-systems/terminus:"^3.x-dev"
 
 # Install CLU
 RUN mkdir -p /usr/local/share/clu
@@ -97,17 +97,15 @@ RUN ln -fs /usr/local/share/drush/vendor/drush/drush/drush /usr/local/bin/drush
 RUN chmod +x /usr/local/bin/drush
 
 # Add a collection of useful Terminus plugins
-env TERMINUS_PLUGINS_DIR /usr/local/share/terminus-plugins
-RUN mkdir -p /usr/local/share/terminus-plugins
-RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-build-tools-plugin:^2
-RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-clu-plugin:^1.0.5
-RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-secrets-plugin:^1.3
-RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-rsync-plugin:^1.1
-RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-quicksilver-plugin:^1.3
-RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-composer-plugin:^1.1
-RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-drupal-console-plugin:^1.1
-RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-mass-update:^1.1
-RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-site-clone-plugin:^2
+RUN terminus self:plugin:add terminus-build-tools-plugin
+RUN terminus self:plugin:add terminus-clu-plugin
+RUN terminus self:plugin:add terminus-secrets-plugin
+RUN terminus self:plugin:add terminus-rsync-plugin
+RUN terminus self:plugin:add terminus-quicksilver-plugin
+RUN terminus self:plugin:add terminus-composer-plugin
+RUN terminus self:plugin:add terminus-drupal-console-plugin
+RUN terminus self:plugin:add terminus-mass-update
+RUN terminus self:plugin:add terminus-site-clone-plugin
 
 # Add phpcs for use in checking code style
 RUN mkdir ~/phpcs && cd ~/phpcs && COMPOSER_BIN_DIR=/usr/local/bin composer require squizlabs/php_codesniffer:^2.7
