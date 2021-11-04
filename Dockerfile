@@ -84,7 +84,7 @@ USER tester
 
 # Install Terminus
 RUN mkdir -p /usr/local/share/terminus
-RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/terminus require pantheon-systems/terminus:"^3.x-dev"
+RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/terminus require pantheon-systems/terminus:"^3"
 
 # Install CLU
 RUN mkdir -p /usr/local/share/clu
