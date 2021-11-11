@@ -78,6 +78,8 @@ RUN curl -s https://raw.githubusercontent.com/zaquestion/lab/master/install.sh |
 # Create an unpriviliged test user
 RUN groupadd -g 999 tester && \
     useradd -r -m -u 999 -g tester tester && \
+    adduser tester sudo && \
+    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers && \
     chown -R tester /usr/local && \
     chown -R tester /build-tools-ci
 USER tester
