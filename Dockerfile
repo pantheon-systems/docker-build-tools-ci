@@ -108,6 +108,9 @@ RUN terminus self:plugin:add terminus-drupal-console-plugin
 RUN terminus self:plugin:add terminus-mass-update
 RUN terminus self:plugin:add terminus-site-clone-plugin
 
+ENV TERMINUS_PLUGINS_DIR=/home/tester/.terminus/plugins-3.x
+ENV TERMINUS_DEPENDENCIES_BASE_DIR=/home/tester/.terminus/terminus-dependencies
+
 # Add phpcs for use in checking code style
 RUN mkdir ~/phpcs && cd ~/phpcs && COMPOSER_BIN_DIR=/usr/local/bin composer require squizlabs/php_codesniffer:^2.7
 
