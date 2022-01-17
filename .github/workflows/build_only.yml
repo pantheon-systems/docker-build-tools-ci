@@ -7,7 +7,7 @@ on:
 jobs:
   docker-build:
     runs-on: ubuntu-latest
-    name: Build and push ${{ matrix.php-versions }} Docker image
+    name: Build ${{ matrix.php-versions }} Docker image
     strategy:
       matrix:
         php-versions: ['7.4', '8.0']
