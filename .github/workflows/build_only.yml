@@ -7,6 +7,9 @@ on:
 jobs:
   docker-build:
     runs-on: ubuntu-latest
+    env:
+      TEST_SECRET: ${{ secrets.QUAY_USERNAME }}
+      TEST_SECRET2: ${{ secrets.QUAY_PASSWORD }}
     name: Build and push ${{ matrix.php-versions }} Docker image
     strategy:
       matrix:
@@ -14,6 +17,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
