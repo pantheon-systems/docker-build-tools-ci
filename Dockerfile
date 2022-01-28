@@ -84,10 +84,10 @@ RUN groupadd -g 999 tester && \
     chown -R tester /build-tools-ci
 USER tester
 
-# Install Terminus
-RUN mkdir -p /usr/local/share/terminus
-RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/terminus init --stability=alpha -n
-RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/terminus require pantheon-systems/terminus:"^3"
+# Install terminus
+RUN curl -L https://github.com/pantheon-systems/terminus/releases/download/3.0.3/terminus.phar -o /usr/local/bin/terminus && \
+    chmod +x /usr/local/bin/terminus
+RUN terminus self:update
 
 # Install CLU
 RUN mkdir -p /usr/local/share/clu
