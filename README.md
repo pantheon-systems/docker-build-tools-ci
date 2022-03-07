@@ -1,6 +1,7 @@
 # Docker Build Tools CI
 
-[![docker pull quay.io/pantheon-public/build-tools-ci](https://img.shields.io/badge/image-quay-blue.svg)](https://quay.io/repository/pantheon-public/build-tools-ci)
+[![Actively Maintained](https://img.shields.io/badge/Pantheon-Actively_Maintained-yellow?logo=pantheon&color=FFDC28)](https://pantheon.io/docs/oss-support-levels#actively-maintained)
+
 
 [![Docker Hub pantheonpublic/build-tools-ci](https://img.shields.io/docker/pulls/pantheonpublic/build-tools-ci)](https://hub.docker.com/repository/docker/pantheonpublic/build-tools-ci)
 
