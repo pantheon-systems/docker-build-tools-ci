@@ -90,7 +90,7 @@ env TERMINUS_PLUGINS_DIR /usr/local/share/terminus-plugins
 RUN mkdir -p /usr/local/share/terminus-plugins
 RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-build-tools-plugin:^2
 RUN composer -n create-project --no-dev --no-install -d /usr/local/share/terminus-plugins pantheon-systems/terminus-clu-plugin:^1.0.5
-RUN composer update --prefer-lowest -d /usr/local/share/terminus-plugins/terminus-clu-plugin
+RUN composer update --prefer-lowest --no-dev -d /usr/local/share/terminus-plugins/terminus-clu-plugin
 RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-secrets-plugin:^1.3
 RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-rsync-plugin:^1.1
 RUN composer -n create-project --no-dev -d /usr/local/share/terminus-plugins pantheon-systems/terminus-quicksilver-plugin:^1.3
