@@ -15,7 +15,6 @@ RUN apt-get update && \
         libsodium-dev \
         libpng-dev \
         libfreetype6-dev \
-        libjpeg62-turbo-dev \
         zlib1g-dev \
         libicu-dev \
         libxml2-dev \
@@ -76,8 +75,8 @@ RUN composer selfupdate --2
 RUN curl -s https://raw.githubusercontent.com/zaquestion/lab/master/install.sh | bash
 
 # Create an unpriviliged test user
-RUN groupadd -g 999 tester && \
-    useradd -r -m -u 999 -g tester tester && \
+# Group 999 already exists on base image (docker).
+RUN useradd -r -m -u 999 -g 999 tester && \
     adduser tester sudo && \
     echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers && \
     chown -R tester /usr/local && \
