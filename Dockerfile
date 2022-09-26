@@ -1,7 +1,7 @@
 ARG PHPVERSION
 
 # Use an official Python runtime as a parent image
-FROM circleci/php:${PHPVERSION}-node-browsers
+FROM cimg/php:${PHPVERSION}-browsers
 
 # Switch to root user
 USER root
