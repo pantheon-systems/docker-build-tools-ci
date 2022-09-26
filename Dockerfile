@@ -15,6 +15,7 @@ RUN apt-get update && \
         libsodium-dev \
         libpng-dev \
         libfreetype6-dev \
+        libjpeg-turbo8-dev \
         zlib1g-dev \
         libicu-dev \
         libxml2-dev \
@@ -29,7 +30,6 @@ RUN pecl config-set php_ini /usr/local/etc/php/php.ini && \
         pear config-set php_ini /usr/local/etc/php/php.ini && \
         pecl channel-update pecl.php.net
 
-ARG PHPVERSION
 RUN if [ "$PHPVERSION" = "7.3" ]; then docker-php-ext-configure gd \
         --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/; \
     else \
