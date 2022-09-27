@@ -15,7 +15,6 @@ RUN apt-get update && \
         libsodium-dev \
         libpng-dev \
         libfreetype6-dev \
-        libjpeg-turbo8-dev \
         zlib1g-dev \
         libicu-dev \
         libxml2-dev \
@@ -23,29 +22,12 @@ RUN apt-get update && \
         git
 
 # Add necessary PHP Extensions
-RUN docker-php-ext-configure intl
-RUN docker-php-ext-install intl
-
 RUN pecl config-set php_ini /usr/local/etc/php/php.ini && \
         pear config-set php_ini /usr/local/etc/php/php.ini && \
         pecl channel-update pecl.php.net
 
-RUN if [ "$PHPVERSION" = "7.3" ]; then docker-php-ext-configure gd \
-        --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/; \
-    else \
-        docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/; fi \
-    &&  docker-php-ext-install -j$(nproc) gd
-
-RUN docker-php-ext-configure sodium
-RUN docker-php-ext-install sodium
-RUN pecl install libsodium
-
 RUN pecl install imagick
 RUN docker-php-ext-enable imagick
-
-RUN docker-php-ext-install bcmath
-
-RUN docker-php-ext-install soap
 
 RUN pecl install pcov
 RUN docker-php-ext-enable pcov
