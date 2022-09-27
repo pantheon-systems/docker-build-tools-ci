@@ -32,6 +32,9 @@ RUN docker-php-ext-enable imagick
 RUN pecl install pcov
 RUN docker-php-ext-enable pcov
 
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug
+
 # Set the memory limit to unlimited for expensive Composer interactions
 RUN echo "memory_limit=-1" > /usr/local/etc/php/conf.d/memory.ini
 
