@@ -93,6 +93,8 @@ RUN terminus self:plugin:add terminus-site-clone-plugin
 
 ENV TERMINUS_PLUGINS_DIR=/home/tester/.terminus/plugins-3.x
 ENV TERMINUS_DEPENDENCIES_BASE_DIR=/home/tester/.terminus/terminus-dependencies
+# For PHP 8.1 currently.
+ENV TERMINUS_ALLOW_UNSUPPORTED_NEWER_PHP=1
 
 # Add phpcs for use in checking code style
 RUN mkdir ~/phpcs && cd ~/phpcs && COMPOSER_BIN_DIR=/usr/local/bin composer require squizlabs/php_codesniffer:^2.7
