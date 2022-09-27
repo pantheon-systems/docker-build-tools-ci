@@ -1,7 +1,7 @@
 ARG PHPVERSION
 
 # Use an official Python runtime as a parent image
-FROM circleci/php:${PHPVERSION}-node-browsers
+FROM cimg/php:${PHPVERSION}-browsers
 
 # Switch to root user
 USER root
@@ -15,7 +15,6 @@ RUN apt-get update && \
         libsodium-dev \
         libpng-dev \
         libfreetype6-dev \
-        libjpeg62-turbo-dev \
         zlib1g-dev \
         libicu-dev \
         libxml2-dev \
@@ -23,33 +22,18 @@ RUN apt-get update && \
         git
 
 # Add necessary PHP Extensions
-RUN docker-php-ext-configure intl
-RUN docker-php-ext-install intl
-
 RUN pecl config-set php_ini /usr/local/etc/php/php.ini && \
         pear config-set php_ini /usr/local/etc/php/php.ini && \
         pecl channel-update pecl.php.net
 
-ARG PHPVERSION
-RUN if [ "$PHPVERSION" = "7.3" ]; then docker-php-ext-configure gd \
-        --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/; \
-    else \
-        docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/; fi \
-    &&  docker-php-ext-install -j$(nproc) gd
-
-RUN docker-php-ext-configure sodium
-RUN docker-php-ext-install sodium
-RUN pecl install libsodium
-
 RUN pecl install imagick
 RUN docker-php-ext-enable imagick
 
-RUN docker-php-ext-install bcmath
-
-RUN docker-php-ext-install soap
-
 RUN pecl install pcov
 RUN docker-php-ext-enable pcov
+
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug
 
 # Set the memory limit to unlimited for expensive Composer interactions
 RUN echo "memory_limit=-1" > /usr/local/etc/php/conf.d/memory.ini
@@ -76,8 +60,8 @@ RUN composer selfupdate --2
 RUN curl -s https://raw.githubusercontent.com/zaquestion/lab/master/install.sh | bash
 
 # Create an unpriviliged test user
-RUN groupadd -g 999 tester && \
-    useradd -r -m -u 999 -g tester tester && \
+# Group 999 already exists on base image (docker).
+RUN useradd -r -m -u 999 -g 999 tester && \
     adduser tester sudo && \
     echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers && \
     chown -R tester /usr/local && \
@@ -85,7 +69,7 @@ RUN groupadd -g 999 tester && \
 USER tester
 
 # Install terminus
-RUN curl -L https://github.com/pantheon-systems/terminus/releases/download/3.0.3/terminus.phar -o /usr/local/bin/terminus && \
+RUN curl -L https://github.com/pantheon-systems/terminus/releases/download/3.0.8/terminus.phar -o /usr/local/bin/terminus && \
     chmod +x /usr/local/bin/terminus
 RUN terminus self:update
 
