@@ -65,11 +65,8 @@ RUN useradd -r -m -u 999 -g 999 tester && \
     chown -R tester /build-tools-ci
 USER tester
 
-# For PHP 8.1 currently.
-ENV TERMINUS_ALLOW_UNSUPPORTED_NEWER_PHP=1
-
 # Install terminus
-RUN curl -L https://github.com/pantheon-systems/terminus/releases/download/3.0.3/terminus.phar -o /usr/local/bin/terminus && \
+RUN curl -L https://github.com/pantheon-systems/terminus/releases/download/3.0.8/terminus.phar -o /usr/local/bin/terminus && \
     chmod +x /usr/local/bin/terminus
 RUN terminus self:update
 
