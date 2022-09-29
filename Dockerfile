@@ -74,6 +74,9 @@ RUN useradd -r -m -u 999 -g 999 tester && \
     chown -R tester /build-tools-ci
 USER tester
 
+# Avoid git errors with safe.directory.
+RUN git config --global --add safe.directory '*'
+
 # Install terminus
 RUN curl -L https://github.com/pantheon-systems/terminus/releases/download/3.0.8/terminus.phar -o /usr/local/bin/terminus && \
     chmod +x /usr/local/bin/terminus
