@@ -65,6 +65,9 @@ RUN composer selfupdate --2
 # Add lab in case anyone wants to automate GitLab MR creation, etc.
 RUN curl -s https://raw.githubusercontent.com/zaquestion/lab/master/install.sh | bash
 
+# Avoid git errors with safe.directory as user root.
+RUN git config --global --add safe.directory '*'
+
 # Create an unpriviliged test user
 # Group 999 already exists on base image (docker).
 RUN useradd -r -m -u 999 -g 999 tester && \
@@ -74,7 +77,7 @@ RUN useradd -r -m -u 999 -g 999 tester && \
     chown -R tester /build-tools-ci
 USER tester
 
-# Avoid git errors with safe.directory.
+# Avoid git errors with safe.directory as user tester.
 RUN git config --global --add safe.directory '*'
 
 # Install terminus
