@@ -3,6 +3,9 @@ ARG PHPVERSION
 # Use an official Python runtime as a parent image
 FROM cimg/php:${PHPVERSION}-browsers
 
+# We need an ARG declaration after the FROM so that it can be used below.
+ARG PHPVERSION
+
 # Switch to root user
 USER root
 
@@ -32,7 +35,7 @@ RUN docker-php-ext-enable imagick
 RUN pecl install pcov
 RUN docker-php-ext-enable pcov
 
-RUN if [ "$PHPVERSION" = "7.4" ] ; then pecl install xdebug-3.1.6; else pecl install xdebug; fi
+RUN if [ "$PHPVERSION" = "7.4" ]; then pecl install xdebug-3.1.6; else pecl install xdebug; fi
 RUN docker-php-ext-enable xdebug
 
 # Set the memory limit to unlimited for expensive Composer interactions
