@@ -83,6 +83,8 @@ USER tester
 # Avoid git errors with safe.directory as user tester.
 RUN git config --global --add safe.directory '*'
 
+ENV TERMINUS_ALLOW_UNSUPPORTED_NEWER_PHP=1
+
 # Install terminus
 RUN curl -L https://github.com/pantheon-systems/terminus/releases/download/3.0.8/terminus.phar -o /usr/local/bin/terminus && \
     chmod +x /usr/local/bin/terminus
