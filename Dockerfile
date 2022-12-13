@@ -32,7 +32,7 @@ RUN docker-php-ext-enable imagick
 RUN pecl install pcov
 RUN docker-php-ext-enable pcov
 
-RUN pecl install xdebug
+RUN if [ "$PHPVERSION" = "7.4" ] ; then pecl install xdebug-3.1.6; else pecl install xdebug; fi
 RUN docker-php-ext-enable xdebug
 
 # Set the memory limit to unlimited for expensive Composer interactions
