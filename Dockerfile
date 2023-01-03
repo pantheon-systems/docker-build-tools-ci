@@ -3,6 +3,9 @@ ARG PHPVERSION
 # Use an official Python runtime as a parent image
 FROM cimg/php:${PHPVERSION}-browsers
 
+# We need an ARG declaration after the FROM so that it can be used below.
+ARG PHPVERSION
+
 # Switch to root user
 USER root
 
@@ -32,7 +35,7 @@ RUN docker-php-ext-enable imagick
 RUN pecl install pcov
 RUN docker-php-ext-enable pcov
 
-RUN pecl install xdebug
+RUN if [ "$PHPVERSION" = "7.4" ]; then pecl install xdebug-3.1.6; else pecl install xdebug; fi
 RUN docker-php-ext-enable xdebug
 
 # Set the memory limit to unlimited for expensive Composer interactions
@@ -81,7 +84,7 @@ USER tester
 RUN git config --global --add safe.directory '*'
 
 # Install terminus
-RUN curl -L https://github.com/pantheon-systems/terminus/releases/download/3.0.8/terminus.phar -o /usr/local/bin/terminus && \
+RUN curl -L https://github.com/pantheon-systems/terminus/releases/download/3.1.2/terminus.phar -o /usr/local/bin/terminus && \
     chmod +x /usr/local/bin/terminus
 RUN terminus self:update
 
