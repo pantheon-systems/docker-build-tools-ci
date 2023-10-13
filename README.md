@@ -34,12 +34,12 @@ This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://q
 ## Branches
 
 - 7.x: Use a CircleCI base image with Node JS and composer 2. Produces 7.x-php7.3, 7.x-php7.4 and 7.x-php8.0 image tags.
-- 6.x: Use a CircleCI base image with Node JS
-- 5.x: Don't create multidevs when commits are made to the default branch, instead working directly on the dev environment
-- 4.x: Terminus 2.x and Build Tools 2.x
-- 3.x: Deprecated: Terminus 1 with Build Tools 2.0.0-beta2
-- 2.x: Terminus 1.x and Build Tools 1.x
-- 1.x: Deprecated
+- 6.x: Use a CircleCI base image with Node JS (No longer maintained)
+- 5.x: Don't create multidevs when commits are made to the default branch, instead working directly on the dev environment (No longer maintained)
+- 4.x: Terminus 2.x and Build Tools 2.x (No longer maintained)
+- 3.x: Deprecated: Terminus 1 with Build Tools 2.0.0-beta2 (No longer maintained)
+- 2.x: Terminus 1.x and Build Tools 1.x (No longer maintained)
+- 1.x: Deprecated (No longer maintained)
 
 ## 7.x Docker images
 
