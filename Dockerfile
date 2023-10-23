@@ -6,6 +6,9 @@ FROM circleci/php:${PHPVERSION}-node-browsers
 # Switch to root user
 USER root
 
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4EB27DB2A3B88B8B
+
+
 # Install necessary packages for PHP extensions
 RUN apt-get update && \
      apt-get install -y \
