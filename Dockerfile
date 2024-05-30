@@ -9,6 +9,12 @@ ARG PHPVERSION
 # Switch to root user
 USER root
 
+# Setup apt keys and install google-chrome.
+RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
+    curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    apt update -y && \
+    apt install -y google-chrome-stable
+
 # Install necessary packages for PHP extensions
 RUN apt-get update && \
      apt-get install -y \
@@ -55,12 +61,6 @@ ADD . /build-tools-ci
 RUN apt-get update
 RUN apt-get install -y ruby jq curl rsync hub
 RUN gem install circle-cli
-
-# Install google-chrome.
-RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
-    curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-    apt update -y && \
-    apt install -y google-chrome-stable
 
 # Make sure we are on the latest version of Composer
 RUN composer selfupdate --2
