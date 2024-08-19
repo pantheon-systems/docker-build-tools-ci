@@ -55,7 +55,7 @@ ADD . /build-tools-ci
 # Collect the components we need for this image
 RUN apt-get update
 RUN apt-get install -y ruby jq curl rsync hub
-RUN gem install circle-cli
+RUN gem install public_suffix -v 5.1.1 && gem install circle-cli
 
 # Install google-chrome.
 RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
