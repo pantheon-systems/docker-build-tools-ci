@@ -10,8 +10,9 @@ ARG PHPVERSION
 USER root
 
 # Install necessary packages for PHP extensions
-RUN apt-get update && \
-     apt-get install -y \
+RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    apt-get update && \
+    apt-get install -y \
         dnsutils \
         libmagickwand-dev \
         libzip-dev \
