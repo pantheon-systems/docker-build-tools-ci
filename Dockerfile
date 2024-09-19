@@ -36,7 +36,19 @@ RUN pecl config-set php_ini /usr/local/etc/php/php.ini && \
         pear config-set php_ini /usr/local/etc/php/php.ini && \
         pecl channel-update pecl.php.net
 
-RUN pecl install imagick
+ADD patches/641.diff /tmp/641.diff
+
+RUN pecl download imagick && \
+    tar -xvf imagick-*.tgz && \
+    rm imagick-*.tgz && \
+    cd imagick-* && \
+    git apply < /tmp/641.diff && \
+    phpize && \
+    ./configure && \
+    make && \
+    make install && \
+    cd .. && \
+    rm -rf imagick-*
 RUN docker-php-ext-enable imagick
 
 RUN pecl install pcov

@@ -1,0 +1,10 @@
+diff --git a/Imagick.stub.php b/Imagick.stub.php
+index 804c0152..49da9386 100644
+--- a/Imagick.stub.php
++++ b/Imagick.stub.php
+@@ -1669,4 +1669,5 @@ public function setInterpolateMethod(int $method): bool{}
+ 	public function setOrientation(int $orientation): bool {}
+ #endif
+ 
++#endif
+ }
