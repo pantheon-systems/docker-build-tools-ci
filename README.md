@@ -74,6 +74,7 @@ docker build --build-arg PHPVERSION=$PHPVERSION -t quay.io/pantheon-public/build
 - quay.io/pantheon-public/build-tools-ci:8.x-php8.0
 - quay.io/pantheon-public/build-tools-ci:8.x-php8.1
 - quay.io/pantheon-public/build-tools-ci:8.x-php8.2
+- quay.io/pantheon-public/build-tools-ci:8.x-php8.3
 
 #### Usage example
 
