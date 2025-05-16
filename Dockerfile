@@ -1,4 +1,4 @@
-ARG PHPVERSION
+ARG PHPVERSION=8.4
 
 # Use an official Python runtime as a parent image
 FROM cimg/php:${PHPVERSION}-browsers
@@ -38,23 +38,15 @@ RUN pecl config-set php_ini /usr/local/etc/php/php.ini && \
 
 ADD patches/641.diff /tmp/641.diff
 
-RUN pecl download imagick && \
-    tar -xvf imagick-*.tgz && \
-    rm imagick-*.tgz && \
-    cd imagick-* && \
-    git apply < /tmp/641.diff && \
-    phpize && \
-    ./configure && \
-    make && \
-    make install && \
-    cd .. && \
-    rm -rf imagick-*
-RUN docker-php-ext-enable imagick
+RUN apt-get install -y \
+    libmagickwand-dev --no-install-recommends \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick
 
 RUN pecl install pcov
 RUN docker-php-ext-enable pcov
 
-RUN if [ "$PHPVERSION" = "7.4" ]; then pecl install xdebug-3.1.6; else pecl install xdebug; fi
+RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
 
 # Set the memory limit to unlimited for expensive Composer interactions
@@ -97,32 +89,19 @@ USER tester
 RUN git config --global --add safe.directory '*'
 
 # Install terminus
-RUN curl -L https://github.com/pantheon-systems/terminus/releases/download/3.4.0/terminus.phar -o /usr/local/bin/terminus && \
+RUN curl -L https://github.com/pantheon-systems/terminus/releases/download/4.0.0/terminus.phar -o /usr/local/bin/terminus && \
     chmod +x /usr/local/bin/terminus
 RUN terminus self:update
 
-# Install CLU
-RUN mkdir -p /usr/local/share/clu
-RUN /usr/bin/env COMPOSER_BIN_DIR=/usr/local/bin composer -n --working-dir=/usr/local/share/clu require danielbachhuber/composer-lock-updater:^0.8.2
-
-# Install Drush
-RUN mkdir -p /usr/local/share/drush
-RUN /usr/bin/env composer -n --working-dir=/usr/local/share/drush require drush/drush "^10"
-RUN ln -fs /usr/local/share/drush/vendor/drush/drush/drush /usr/local/bin/drush
-RUN chmod +x /usr/local/bin/drush
-
 # Add a collection of useful Terminus plugins
 RUN terminus self:plugin:add terminus-build-tools-plugin
-RUN terminus self:plugin:add terminus-clu-plugin
-RUN terminus self:plugin:add terminus-secrets-plugin
+RUN terminus self:plugin:add terminus-secrets-manager-plugin
 RUN terminus self:plugin:add terminus-rsync-plugin
-RUN terminus self:plugin:add terminus-quicksilver-plugin
 RUN terminus self:plugin:add terminus-composer-plugin
-RUN terminus self:plugin:add terminus-drupal-console-plugin
 RUN terminus self:plugin:add terminus-mass-update
 RUN terminus self:plugin:add terminus-site-clone-plugin
 
-ENV TERMINUS_PLUGINS_DIR=/home/tester/.terminus/plugins-3.x
+ENV TERMINUS_PLUGINS_DIR=/home/tester/.terminus/plugins-4.x
 ENV TERMINUS_DEPENDENCIES_BASE_DIR=/home/tester/.terminus/terminus-dependencies
 
 # Add phpcs for use in checking code style
