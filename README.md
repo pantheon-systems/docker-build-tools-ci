@@ -13,7 +13,7 @@ This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://q
 - [Terminus](https://github.com/pantheon-systems/terminus)
 - Terminus plugins
   - [Terminus Build Tools Plugin](https://github.com/pantheon-systems/terminus-build-tools-plugin)
-  - [Terminus Secrets Plugin](https://github.com/pantheon-systems/terminus-secrets-plugin)
+  - [Terminus Secrets Manager Plugin](https://github.com/pantheon-systems/terminus-secrets-manager-plugin)
   - [Terminus Rsync Plugin](https://github.com/pantheon-systems/terminus-rsync-plugin)
   - [Terminus Composer Plugin](https://github.com/pantheon-systems/terminus-composer-plugin)
   - [Terminus Mass Update Plugin](https://github.com/pantheon-systems/terminus-mass-update)
