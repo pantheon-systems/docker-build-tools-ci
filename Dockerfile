@@ -104,6 +104,7 @@ RUN ln -fs /usr/local/share/drush/vendor/drush/drush/drush /usr/local/bin/drush
 # Add a collection of useful Terminus plugins
 RUN terminus self:plugin:add terminus-build-tools-plugin
 RUN terminus self:plugin:add terminus-secrets-manager-plugin
+RUN terminus self:plugin:add terminus-secrets-plugin
 RUN terminus self:plugin:add terminus-rsync-plugin
 RUN terminus self:plugin:add terminus-composer-plugin
 RUN terminus self:plugin:add terminus-mass-update
