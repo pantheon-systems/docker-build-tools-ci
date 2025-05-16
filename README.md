@@ -13,14 +13,11 @@ This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://q
 - [Terminus](https://github.com/pantheon-systems/terminus)
 - Terminus plugins
   - [Terminus Build Tools Plugin](https://github.com/pantheon-systems/terminus-build-tools-plugin)
-  - [Terminus Secrets Plugin](https://github.com/pantheon-systems/terminus-secrets-plugin)
+  - [Terminus Secrets Manager Plugin](https://github.com/pantheon-systems/terminus-secrets-manager-plugin)
   - [Terminus Rsync Plugin](https://github.com/pantheon-systems/terminus-rsync-plugin)
-  - [Terminus Quicksilver Plugin](https://github.com/pantheon-systems/terminus-quicksilver-plugin)
   - [Terminus Composer Plugin](https://github.com/pantheon-systems/terminus-composer-plugin)
-  - [Terminus Drupal Console Plugin](https://github.com/pantheon-systems/terminus-drupal-console-plugin)
   - [Terminus Mass Update Plugin](https://github.com/pantheon-systems/terminus-mass-update)
-  - [Terminus Aliases Plugin](https://github.com/pantheon-systems/terminus-aliases-plugin)
-  - [Terminus CLU Plugin](https://github.com/pantheon-systems/terminus-clu-plugin)
+  - [Terminus Site Clone Plugin](https://github.com/pantheon-systems/terminus-site-clone-plugin)
 - Test tools
   - headless chrome
   - phpunit
@@ -33,48 +30,30 @@ This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://q
 
 ## Branches
 
+- 9.x: Terminus 4. Produces 9.x-php8.4, 9.x-php8.3 and 9.x-php-8.4
 - 8.x: Use a CircleCI base image with Node JS, composer 2 and Terminus 3. Produces 8.x-php7.4, 8.x-php8.0, 8.x-php8.1, 8.x-php8.2 and 8.x-php8.3 image tags.
-- 7.x: Use a CircleCI base image with Node JS and composer 2. Produces 7.x-php7.3, 7.x-php7.4 and 7.x-php8.0 image tags.
-- 6.x: Use a CircleCI base image with Node JS (No longer maintained)
-- 5.x: Don't create multidevs when commits are made to the default branch, instead working directly on the dev environment (No longer maintained)
-- 4.x: Terminus 2.x and Build Tools 2.x (No longer maintained)
-- 3.x: Deprecated: Terminus 1 with Build Tools 2.0.0-beta2 (No longer maintained)
-- 2.x: Terminus 1.x and Build Tools 1.x (No longer maintained)
-- 1.x: Deprecated (No longer maintained)
 
-## 8.x Docker images
+Branches 7.x and lower are deprecated and unsupported.
+
+## 9.x Docker images
 
 ### Building the image
 
 From project root:
 
 ```
-# PHPVERSION could be 7.4, 8.0, 8.1, 8.2 or 8.3.
-PHPVERSION=7.4
-docker build --build-arg PHPVERSION=$PHPVERSION -t quay.io/pantheon-public/build-tools-ci:8.x-php${PHPVERSION} .
-```
-
-## 7.x Docker images
-
-### Building the image
-
-From project root:
-
-```
-# PHPVERSION could be 7.3, 7.4 or 8.0.
-PHPVERSION=7.4
-docker build --build-arg PHPVERSION=$PHPVERSION -t quay.io/pantheon-public/build-tools-ci:7.x-php${PHPVERSION} .
+# PHPVERSION could be 8.2, 8.3 or 8.4.
+PHPVERSION=8.4
+docker build --build-arg PHPVERSION=$PHPVERSION -t quay.io/pantheon-public/build-tools-ci:9.x-php${PHPVERSION} .
 ```
 
 ### Using the image
 
 #### Image name and tag
 
-- quay.io/pantheon-public/build-tools-ci:8.x-php7.4
-- quay.io/pantheon-public/build-tools-ci:8.x-php8.0
-- quay.io/pantheon-public/build-tools-ci:8.x-php8.1
-- quay.io/pantheon-public/build-tools-ci:8.x-php8.2
-- quay.io/pantheon-public/build-tools-ci:8.x-php8.3
+- quay.io/pantheon-public/build-tools-ci:9.x-php8.2
+- quay.io/pantheon-public/build-tools-ci:9.x-php8.3
+- quay.io/pantheon-public/build-tools-ci:9.x-php8.4
 
 #### Usage example
 
