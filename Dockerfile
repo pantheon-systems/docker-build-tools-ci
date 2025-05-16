@@ -93,6 +93,14 @@ RUN curl -L https://github.com/pantheon-systems/terminus/releases/download/4.0.0
     chmod +x /usr/local/bin/terminus
 RUN terminus self:update
 
+# Install Drush.
+# It is recommended that you configure the PATH in your CI to include `vendor/bin` earlier
+# than `/usr/local/bin`. This will ensure that the site-local Drush is called first, and
+# the old Drush 10 global install (provided here for b/c) is not used.
+RUN mkdir -p /usr/local/share/drush
+RUN /usr/bin/env composer -n --working-dir=/usr/local/share/drush require drush/drush "^10"
+RUN ln -fs /usr/local/share/drush/vendor/drush/drush/drush /usr/local/bin/drush
+
 # Add a collection of useful Terminus plugins
 RUN terminus self:plugin:add terminus-build-tools-plugin
 RUN terminus self:plugin:add terminus-secrets-manager-plugin
