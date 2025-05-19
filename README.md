@@ -30,8 +30,16 @@ This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://q
 
 ## Branches
 
-- 9.x: Terminus 4. Produces 9.x-php8.4, 9.x-php8.3 and 9.x-php-8.4
-- 8.x: Use a CircleCI base image with Node JS, composer 2 and Terminus 3. Produces 8.x-php7.4, 8.x-php8.0, 8.x-php8.1, 8.x-php8.2 and 8.x-php8.3 image tags.
+- 9.x: Terminus 4. Produces:
+  - 9.x-php8.2
+  - 9.x-php8.3
+  - 9.x-php8.4
+- 8.x: Terminus 3. Produces:
+  - 8.x-php7.4
+  - 8.x-php8.0
+  - 8.x-php8.1
+  - 8.x-php8.2
+  - 8.x-php8.3
 
 Branches 7.x and lower are deprecated and unsupported.
 
