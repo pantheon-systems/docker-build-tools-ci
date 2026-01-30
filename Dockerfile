@@ -89,7 +89,7 @@ USER tester
 RUN git config --global --add safe.directory '*'
 
 # Install terminus
-RUN curl -L https://github.com/pantheon-systems/terminus/releases/download/4.0.0/terminus.phar -o /usr/local/bin/terminus && \
+RUN curl -L https://github.com/pantheon-systems/terminus/releases/download/4.1.3/terminus.phar -o /usr/local/bin/terminus && \
     chmod +x /usr/local/bin/terminus
 RUN terminus self:update
 
