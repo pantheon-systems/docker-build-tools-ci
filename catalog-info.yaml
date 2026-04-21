@@ -9,4 +9,4 @@ metadata:
 spec:
   type: tool
   lifecycle: mature
-  owner: devx
+  owner: developer-experience
