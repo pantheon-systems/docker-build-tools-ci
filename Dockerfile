@@ -125,6 +125,7 @@ RUN git clone https://github.com/sstephenson/bats.git; bats/install.sh /usr/loca
 # Add Behat for more functional testing
 RUN mkdir ~/behat && \
     cd ~/behat && \
+    composer init --no-interaction && \
     composer config policy.advisories.block false && \
     COMPOSER_BIN_DIR=/usr/local/bin \
     composer require \
