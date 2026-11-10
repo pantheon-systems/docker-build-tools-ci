@@ -12,7 +12,7 @@ jobs:
         php-versions: ['8.2', '8.3', '8.4']
     steps:
       - name: Checkout
-        uses: actions/checkout@0717577d45739eb3c851188b29f50ed6c0b2194e # v2.8.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Set up QEMU
         uses: docker/setup-qemu-action@27d0a4f181a40b142cce983c5393082c365d1480 # v1.2.0
       - name: Set up Docker Buildx
