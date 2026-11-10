@@ -9,6 +9,22 @@
 
 This is the source Dockerfile for the [pantheon-public/build-tools-ci](https://quay.io/repository/pantheon-public/build-tools-ci) and [pantheonpublic/build-tools-ci](https://hub.docker.com/repository/docker/pantheonpublic/build-tools-ci) docker image.
 
+## Deployment
+
+Merging to `9.x` rebuilds and pushes the floating `9.x-php*` tags to Quay and Docker Hub, and a push to
+`8.x` does the same for `8.x-php*`; consumers get the new image on their next CI run.
+[DEPLOYMENT.md](DEPLOYMENT.md) has the details.
+
+## Rollback
+
+- **When:** a newly pushed image breaks consumers' CI (Build Tools templates, the repos listed in DEPLOYMENT.md).
+- **Recover:** within 14 days, point each affected tag back at its previous digest in Quay and Docker Hub;
+  a revert-and-rebuild won't reproduce the old image.
+- **Verify:** each tag's digest matches the one captured before the push.
+- **Who:** `#ask-hosting` (developer-experience).
+
+Details: [DEPLOYMENT.md](DEPLOYMENT.md#rollback).
+
 ## Image Contents
 
 - [CircleCI PHP 7.3, Node, Headless browser Docker base image](https://hub.docker.com/r/circleci/php)
